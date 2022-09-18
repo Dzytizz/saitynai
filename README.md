@@ -1,9 +1,5 @@
 # saitynai
 
-Stalo žaidimų sistema - leidžia komentuoti, reitinguoti žaidimus, planuoti turnyrus.
-
-Turnyras -> Žaidimai -> Atsiliepimas
-
-Svečias: peržiūrėti žaidimus, registruotis
-Narys: prisijungti, reitinguoti, komentuoti, kurti turnyrą, prisijungti prie turnyro
-Administratorius: pridėti žaidimus, redaguoti žaidimus
+Kuriama sistema leis palengvinti turimų stalo žaidimų pardavimą arba keitimąsi su kitais stalo žaidimų mėgėjais. 
+Sistema leidžia pridėti įvairius stalo žaidimus prie sistemos. Esamiems žaidimams sistemoje naudotojai gali patalpinti skelbimus, kuriuose aprašomas parduodamas stalo žaidimas (pateikiamas turimo žaidimo būklės įvertinimas, nuotraukos). Prie skelbimo galima nurodyti, žaidimą siekiama parduoti ar išsikeisti į kitą. Jei stalo žaidimą norima iškeisti, skelbime papildomai pateikiama informacija apie norimą gauti žaidimą. Taip pat pateikiama ir pardavėjo kontaktinė informacija (telefono numeris ir/arba elektroninio pašto adresas). Kiti prisiregistravę sistemos naudotojai gali palikti komentarus apie skelbimą. Sistemos naudotojai administratoriui gali pateikti užklausas pridėti daugiau stalo žaidimų prie sistemos jei siekiama parduoti žaidimą, kurio nėra sistemoje.
+Sistemos naudotojas gali būti trijų tipų: svečias, prisijungęs naudotojas bei administratorius. Atitinkamai pagal naudotoją tipą, leidžiama atlikti skirtingas funkcijas. 
