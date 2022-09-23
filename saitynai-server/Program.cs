@@ -1,4 +1,4 @@
-global using saitynai_server.Models;
+global using saitynai_server.Entities;
 global using saitynai_server.Repositories;
 global using Microsoft.EntityFrameworkCore;
 

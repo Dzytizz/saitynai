@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace saitynai_server.Models
+namespace saitynai_server.Entities
 {
     public partial class saitynaiContext : DbContext
     {

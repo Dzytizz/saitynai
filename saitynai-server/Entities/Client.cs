@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace saitynai_server.Models
+namespace saitynai_server.Entities
 {
     public partial class Client
     {
