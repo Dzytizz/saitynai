@@ -1,4 +1,5 @@
 global using saitynai_server.Models;
+global using saitynai_server.Repositories;
 global using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<saitynaiContext>();
+builder.Services.AddTransient<IGamesRepository, GamesRepository>();
 
 var app = builder.Build();
 
