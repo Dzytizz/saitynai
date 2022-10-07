@@ -2,9 +2,9 @@
 {
     public interface IGamesRepository
     {
-        Task<List<Game>> GetAsync();
-        Task<Game> GetAsync(int id);
-        Task InsertAsync(Game game);
+        Task<List<Game>> GetAllAsync();
+        Task<Game?> GetAsync(int id);
+        Task CreateAsync(Game game);
         Task UpdateAsync(Game game);
         Task DeleteAsync(Game game);
     }
@@ -18,17 +18,17 @@
             _context = context;
         }
 
-        public async Task<List<Game>> GetAsync()
+        public async Task<List<Game>> GetAllAsync()
         {
             return await _context.Games.ToListAsync();
         }
 
-        public async Task<Game> GetAsync(int id)
+        public async Task<Game?> GetAsync(int id)
         {
             return await _context.Games.FirstOrDefaultAsync(o => o.Id.Equals(id));
         }
 
-        public async Task InsertAsync(Game game)
+        public async Task CreateAsync(Game game)
         {
             _context.Games.Add(game);
             await _context.SaveChangesAsync();
@@ -42,7 +42,7 @@
 
         public async Task DeleteAsync(Game game)
         {
-            _context.Remove(game);
+            _context.Games.Remove(game);
             await _context.SaveChangesAsync();
         }
     }

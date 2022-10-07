@@ -10,8 +10,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddDbContext<saitynaiContext>();
+
 builder.Services.AddTransient<IGamesRepository, GamesRepository>();
+builder.Services.AddTransient<IAdvertisementsRepository, AdvertisementsRepository>();
+builder.Services.AddTransient<ICommentsRepository, CommentsRepository>();
 
 var app = builder.Build();
 
@@ -23,8 +27,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
+app.UseRouting();
 
 app.MapControllers();
 

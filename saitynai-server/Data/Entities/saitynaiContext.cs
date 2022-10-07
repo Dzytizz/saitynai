@@ -28,8 +28,8 @@ namespace saitynai_server.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;port=3306;database=saitynai;uid=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.36-mysql"));
+                string connectionString = File.ReadAllText("connectionString.txt");
+                optionsBuilder.UseMySql(connectionString, Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.36-mysql"));
             }
         }
 
@@ -63,13 +63,17 @@ namespace saitynai_server.Entities
 
                 entity.HasIndex(e => e.FkClientId, "creates");
 
-                entity.HasIndex(e => e.EnchangeTo, "exchanging_to");
+                entity.HasIndex(e => e.ExchangeTo, "exchanging_to");
 
                 entity.HasIndex(e => e.FkGameId, "has");
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
                     .HasColumnName("id");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(63)
+                    .HasColumnName("title");
 
                 entity.Property(e => e.Condition)
                     .HasColumnType("int(11)")
@@ -79,9 +83,9 @@ namespace saitynai_server.Entities
                     .HasMaxLength(511)
                     .HasColumnName("description");
 
-                entity.Property(e => e.EnchangeTo)
+                entity.Property(e => e.ExchangeTo)
                     .HasColumnType("int(11)")
-                    .HasColumnName("enchange_to");
+                    .HasColumnName("exchange_to");
 
                 entity.Property(e => e.FkClientId)
                     .HasColumnType("int(11)")
