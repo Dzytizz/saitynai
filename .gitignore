@@ -3,7 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-
+# Connection string
+saitynai-server/connectionString.txt
 
 # User-specific files
 *.rsuser
