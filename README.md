@@ -13,7 +13,7 @@ Neprisijungęs naudotojas gali:
 1. Prisiregistruoti prie sistemos;  
 2. Prisijungti prie sistemos;  
 3. Matyti žaidimus;  
-4. Matyti skelbimus;  
+4. Matyti skelbimus.   
 
 Prisijungęs naudotojas gali:  
 1. Matyti žaidimus;  
