@@ -9,6 +9,7 @@ namespace saitynai_server.Data.Dtos.Games
         [Required, Range(1, 128)] int MinPlayers,
         [Required, HigherOrEqualInt("MinPlayers")] int MaxPlayers,
         [Required, StringLength(511)] string Rules,
-        [Required, Range(1, 5)] int Difficulty
+        [Required, Range(1, 5)] int Difficulty,
+        [StringLength(511)] string? Photos
     );
 }
