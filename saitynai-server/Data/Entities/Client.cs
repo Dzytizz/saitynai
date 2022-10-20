@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace saitynai_server.Entities
 {
     public partial class Client
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public string Surname { get; set; } = null!;
-        public string Phone { get; set; } = null!;
-        public int FkUserId { get; set; }
+        [Required] public int Id { get; set; }
+        [Required, StringLength(63)] public string Name { get; set; } = null!;
+        [Required, StringLength(63)] public string Surname { get; set; } = null!;
+        [Required, StringLength(15), Phone] public string Phone { get; set; } = null!;
+        [Required] public User FkUser { get; set; } = null!;
     }
 }

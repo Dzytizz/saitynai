@@ -1,6 +1,7 @@
 global using saitynai_server.Entities;
 global using saitynai_server.Repositories;
 global using Microsoft.EntityFrameworkCore;
+using saitynai_server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddDbContext<saitynaiContext>();
+builder.Services.AddDbContext<TablegamesContext>();
 
 builder.Services.AddTransient<IGamesRepository, GamesRepository>();
 builder.Services.AddTransient<IAdvertisementsRepository, AdvertisementsRepository>();

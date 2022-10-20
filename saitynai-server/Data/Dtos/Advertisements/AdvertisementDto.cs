@@ -4,13 +4,13 @@
     (
         int Id,
         string Title,
-        DateTime PublishDate,
+        DateTime EditDate,
         string Description,
         int Condition,
         decimal Price,
         string Photos,
-        int? ExchangeTo,
-        int FkGameId,
+        Game? ExchangeToGame,
+        Game FkGame,
         int FkClientId
     );
 }

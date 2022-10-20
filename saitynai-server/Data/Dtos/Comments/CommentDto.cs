@@ -3,7 +3,7 @@
     public record CommentDto
     (
         int Id,
-        DateTime PublishDate,
+        DateTime EditDate,
         string Description,
         int FkClientId,
         int FkAdvertisementId

@@ -1,16 +1,18 @@
-﻿namespace saitynai_server.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace saitynai_server.Entities
 {
     public partial class Advertisement
     {
-        public int Id { get; set; }
-        public string Title { get; set; } = null!;
-        public DateTime PublishDate { get; set; }
-        public string Description { get; set; } = null!;
-        public int Condition { get; set; }
-        public decimal Price { get; set; }
-        public string Photos { get; set; } = null!;
-        public int? ExchangeTo { get; set; }
-        public int FkGameId { get; set; }
-        public int FkClientId { get; set; }
+        [Required] public int Id { get; set; }
+        [Required, StringLength(63)] public string Title { get; set; } = null!;
+        [Timestamp] public DateTime EditDate { get; set; }
+        [Required, StringLength(511)] public string Description { get; set; } = null!;
+        [Required] public int? Condition { get; set; }
+        [Required] public decimal? Price { get; set; }
+        [Required, StringLength(511)] public string Photos { get; set; } = null!;
+        public Game? ExchangeToGame { get; set; }
+        [Required] public Game FkGame { get; set; } = null!;
+        [Required] public Client FkClient { get; set; } = null!;
     }
 }

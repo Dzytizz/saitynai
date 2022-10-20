@@ -1,4 +1,6 @@
-﻿namespace saitynai_server.Repositories
+﻿using saitynai_server.Data;
+
+namespace saitynai_server.Repositories
 {
     public interface IAdvertisementsRepository
     {
@@ -11,21 +13,21 @@
 
     public class AdvertisementsRepository : IAdvertisementsRepository
     {
-        private readonly saitynaiContext _context;
+        private readonly TablegamesContext _context;
 
-        public AdvertisementsRepository(saitynaiContext context)
+        public AdvertisementsRepository(TablegamesContext context)
         {
             _context = context;
         }
 
         public async Task<List<Advertisement>> GetAllAsync(int gameId)
         {
-            return await _context.Advertisements.Where(o => o.FkGameId == gameId).ToListAsync();
+            return await _context.Advertisements.Where(o => o.FkGame.Id == gameId).ToListAsync();
         }
 
         public async Task<Advertisement?> GetAsync(int gameId, int advertisementId)
         {
-            return await _context.Advertisements.FirstOrDefaultAsync(o => o.FkGameId == gameId && o.Id == advertisementId);
+            return await _context.Advertisements.FirstOrDefaultAsync(o => o.FkGame.Id == gameId && o.Id == advertisementId);
         }
 
         public async Task CreateAsync(Advertisement advertisement)

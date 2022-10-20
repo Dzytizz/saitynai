@@ -53,19 +53,16 @@ namespace saitynai_server.Controllers
             if (game == null)
                 return NotFound($"Game with id '{gameId}' not found.");
 
-            var advertisement = _mapper.Map<Advertisement>(advertisementPostDto);
-            advertisement.PublishDate = DateTime.UtcNow;
-            advertisement.Photos = "default.jpg"; // ================TEMPORARY===============
-            advertisement.FkGameId = gameId;
-            advertisement.FkClientId = 1; // ====================TEMPORARY=================
+            var exchangeToGame = advertisementPostDto.ExchangeToGameId == null ? null : await _gamesRepository.GetAsync(advertisementPostDto.ExchangeToGameId.Value);
+            if (advertisementPostDto.ExchangeToGameId != null && exchangeToGame == null)
+                return NotFound($"Exchange game with id '{advertisementPostDto.ExchangeToGameId}' not found.");
 
-            // validation
-            //if(advertisement.ExchangeTo != null)
-            //{
-            //    var exhangeGame = await _gamesRepository.GetAsync((int)advertisement.ExchangeTo);
-            //    if (exhangeGame == null)
-            //        return UnprocessableEntity($"Incorrect 'ExchangeTo' value. Game with id '{advertisement.ExchangeTo}' not found.");
-            //}
+            var advertisement = _mapper.Map<Advertisement>(advertisementPostDto);
+            if(advertisement.Photos == null)
+                advertisement.Photos = "default.jpg";
+            advertisement.ExchangeToGame = exchangeToGame;
+            advertisement.FkGame = game;
+            // ==============| SET USER ID HERE |===============
           
             await _advertisementsRepository.CreateAsync(advertisement);
 
@@ -83,8 +80,14 @@ namespace saitynai_server.Controllers
             if (oldAdvertisement == null)
                 return NotFound($"Advertisement with fkGameId '{gameId}' and id '{advertisementId}' not found.");
 
+            var exchangeToGame = advertisementUpdateDto.ExchangeToGameId == null ? null : await _gamesRepository.GetAsync(advertisementUpdateDto.ExchangeToGameId.Value);
+            if (advertisementUpdateDto.ExchangeToGameId != null && exchangeToGame == null)
+                return NotFound($"Exchange game with id '{advertisementUpdateDto.ExchangeToGameId}' not found.");
+
             _mapper.Map(advertisementUpdateDto, oldAdvertisement);
-            oldAdvertisement.Photos = "default.jpg"; // ================TEMPORARY===============
+            if (!oldAdvertisement.Photos.Equals(advertisementUpdateDto.Photos))
+                FilesController.Delete(oldAdvertisement.Photos);
+            oldAdvertisement.ExchangeToGame = exchangeToGame;
 
             await _advertisementsRepository.UpdateAsync(oldAdvertisement);
 

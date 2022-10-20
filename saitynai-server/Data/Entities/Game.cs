@@ -4,13 +4,13 @@ namespace saitynai_server.Entities
 {
     public partial class Game
     {
-        public int Id { get; set; }
-        public string Title { get; set; } = null!;
-        public string Description { get; set; } = null!;
-        public int MinPlayers { get; set; }
-        public int MaxPlayers { get; set; }
-        public string Rules { get; set; } = null!;
-        public int Difficulty { get; set; }
-        public string Photos { get; set; } = null!;
+        [Required] public int Id { get; set; }
+        [Required, StringLength(127)] public string Title { get; set; } = null!;
+        [Required, StringLength(511)] public string Description { get; set; } = null!;
+        [Required] public int? MinPlayers { get; set; }
+        [Required] public int? MaxPlayers { get; set; }
+        [Required, StringLength(511)] public string Rules { get; set; } = null!;
+        [Required, Range(1,5)] public int? Difficulty { get; set; }
+        [Required, StringLength(511)] public string Photos { get; set; } = null!;
     }
 }

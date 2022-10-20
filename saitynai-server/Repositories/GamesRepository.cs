@@ -1,4 +1,6 @@
-﻿namespace saitynai_server.Repositories
+﻿using saitynai_server.Data;
+
+namespace saitynai_server.Repositories
 {
     public interface IGamesRepository
     {
@@ -11,9 +13,9 @@
 
     public class GamesRepository : IGamesRepository
     {
-        private readonly saitynaiContext _context;
+        private readonly TablegamesContext _context;
 
-        public GamesRepository(saitynaiContext context)
+        public GamesRepository(TablegamesContext context)
         {
             _context = context;
         }

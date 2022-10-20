@@ -1,4 +1,6 @@
-﻿namespace saitynai_server.Repositories
+﻿using saitynai_server.Data;
+
+namespace saitynai_server.Repositories
 {
     public interface ICommentsRepository
     {
@@ -12,21 +14,21 @@
 
     public class CommentsRepository : ICommentsRepository
     {
-        private readonly saitynaiContext _context;
+        private readonly TablegamesContext _context;
 
-        public CommentsRepository(saitynaiContext context)
+        public CommentsRepository(TablegamesContext context)
         {
             _context = context;
         }
 
         public async Task<List<Comment>> GetAllAsync(int advertisementId)
         {
-            return await _context.Comments.Where(o => o.FkAdvertisementId == advertisementId).ToListAsync();
+            return await _context.Comments.Where(o => o.FkAdvertisement.Id == advertisementId).ToListAsync();
         }
 
         public async Task<Comment?> GetAsync(int advertisementId, int commentId)
         {
-            return await _context.Comments.FirstOrDefaultAsync(o => o.FkAdvertisementId == advertisementId && o.Id == commentId);
+            return await _context.Comments.FirstOrDefaultAsync(o => o.FkAdvertisement.Id == advertisementId && o.Id == commentId);
         }
 
         public async Task CreateAsync(Comment comment)

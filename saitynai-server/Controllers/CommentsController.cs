@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-//using saitynai_server.Data.Dtos.Advertisements;
 using saitynai_server.Data.Dtos.Comments;
 
 namespace saitynai_server.Controllers
@@ -69,9 +68,8 @@ namespace saitynai_server.Controllers
                 return NotFound($"Advertisement with fkGameId '{gameId}' and id '{advertisementId}' not found.");
 
             var comment = _mapper.Map<Comment>(commentPostDto);
-            comment.PublishDate = DateTime.UtcNow;
-            comment.FkAdvertisementId = advertisementId;
-            comment.FkClientId = 1;  // ====================TEMPORARY=================
+            comment.FkAdvertisement = advertisement;
+            // ==============| SET USER ID HERE |===============
 
             await _commentsRepository.CreateAsync(comment);
 

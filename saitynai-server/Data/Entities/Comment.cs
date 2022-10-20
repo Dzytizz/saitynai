@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace saitynai_server.Entities
 {
     public partial class Comment
     {
-        public int Id { get; set; }
-        public DateTime PublishDate { get; set; }
-        public string Description { get; set; } = null!;
-        public int FkClientId { get; set; }
-        public int FkAdvertisementId { get; set; }
+        [Required] public int Id { get; set; }
+        [Timestamp] public DateTime EditDate { get; set; }
+        [Required, StringLength(511)] public string Description { get; set; } = null!;
+        [Required] public Client FkClient { get; set; } = null!;
+        [Required] public Advertisement FkAdvertisement { get; set; } = null!;
     }
 }
