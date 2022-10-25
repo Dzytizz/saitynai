@@ -1,13 +1,12 @@
-﻿namespace saitynai_server.Data
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+namespace saitynai_server.Data
 {
-    public class TablegamesContext : DbContext
+    public class TablegamesContext : IdentityDbContext
     {
         public DbSet<Game> Games { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Advertisement> Advertisements { get; set; }
-
-        public DbSet<User> Users { get; set; }
-        public DbSet<Client> Clients { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

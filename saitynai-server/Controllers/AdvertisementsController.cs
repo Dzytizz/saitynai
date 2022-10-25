@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using saitynai_server.Auth.Model;
 using saitynai_server.Data.Dtos.Advertisements;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace saitynai_server.Controllers
 {
@@ -10,12 +14,14 @@ namespace saitynai_server.Controllers
     public class AdvertisementsController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly IAuthorizationService _authorizationService;
         private readonly IAdvertisementsRepository _advertisementsRepository;
         private readonly IGamesRepository _gamesRepository;
 
-        public AdvertisementsController(IMapper mapper, IAdvertisementsRepository advertisementsRepository, IGamesRepository gamesRepository)
+        public AdvertisementsController(IMapper mapper, IAuthorizationService authorizationService, IAdvertisementsRepository advertisementsRepository, IGamesRepository gamesRepository)
         {
             _mapper = mapper;
+            _authorizationService = authorizationService;
             _advertisementsRepository = advertisementsRepository;
             _gamesRepository = gamesRepository;
         }
@@ -47,6 +53,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.User)]
         public async Task<ActionResult<AdvertisementDto>> Create(int gameId, AdvertisementPostDto advertisementPostDto)
         {
             var game = await _gamesRepository.GetAsync(gameId);
@@ -62,7 +69,7 @@ namespace saitynai_server.Controllers
                 advertisement.Photos = "default.jpg";
             advertisement.ExchangeToGame = exchangeToGame;
             advertisement.FkGame = game;
-            // ==============| SET USER ID HERE |===============
+            advertisement.UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
           
             await _advertisementsRepository.CreateAsync(advertisement);
 
@@ -70,6 +77,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpPut("{advertisementId}")]
+        [Authorize(Roles = Roles.User + "," + Roles.Admin)]
         public async Task<ActionResult<AdvertisementDto>> Update(int gameId, int advertisementId, AdvertisementUpdateDto advertisementUpdateDto)
         {
             var game = await _gamesRepository.GetAsync(gameId);
@@ -84,6 +92,10 @@ namespace saitynai_server.Controllers
             if (advertisementUpdateDto.ExchangeToGameId != null && exchangeToGame == null)
                 return NotFound($"Exchange game with id '{advertisementUpdateDto.ExchangeToGameId}' not found.");
 
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, oldAdvertisement, PolicyNames.ResourceOwner);
+            if (!authorizationResult.Succeeded)
+                return Forbid(); // could be 404 for security
+
             _mapper.Map(advertisementUpdateDto, oldAdvertisement);
             if (!oldAdvertisement.Photos.Equals(advertisementUpdateDto.Photos))
                 FilesController.Delete(oldAdvertisement.Photos);
@@ -95,6 +107,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpDelete("{advertisementId}")]
+        [Authorize(Roles = Roles.User + "," + Roles.Admin)]
         public async Task<ActionResult> Remove(int gameId, int advertisementId)
         {
             var game = await _gamesRepository.GetAsync(gameId);

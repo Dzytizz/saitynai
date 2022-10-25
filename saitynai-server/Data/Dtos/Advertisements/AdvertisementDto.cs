@@ -10,7 +10,7 @@
         decimal Price,
         string Photos,
         Game? ExchangeToGame,
-        Game FkGame,
-        int FkClientId
+        Game FkGame
+        //int FkClientId
     );
 }

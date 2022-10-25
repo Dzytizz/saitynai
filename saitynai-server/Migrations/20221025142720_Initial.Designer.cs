@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using saitynai_server.Data;
 
@@ -10,9 +11,10 @@ using saitynai_server.Data;
 namespace saitynai_server.Migrations
 {
     [DbContext(typeof(TablegamesContext))]
-    partial class TablegamesContextModelSnapshot : ModelSnapshot
+    [Migration("20221025142720_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

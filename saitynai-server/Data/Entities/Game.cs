@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using saitynai_server.Auth.Model;
+using System.ComponentModel.DataAnnotations;
 
 namespace saitynai_server.Entities
 {
