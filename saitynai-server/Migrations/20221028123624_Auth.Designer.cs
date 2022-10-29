@@ -11,8 +11,8 @@ using saitynai_server.Data;
 namespace saitynai_server.Migrations
 {
     [DbContext(typeof(TablegamesContext))]
-    [Migration("20221025142720_Initial")]
-    partial class Initial
+    [Migration("20221028123624_Auth")]
+    partial class Auth
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -293,9 +293,15 @@ namespace saitynai_server.Migrations
                     b.Property<int>("FkAdvertisementId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FkAdvertisementId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
@@ -434,7 +440,15 @@ namespace saitynai_server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("saitynai_server.Auth.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("FkAdvertisement");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

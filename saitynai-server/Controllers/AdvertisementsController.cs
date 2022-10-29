@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using saitynai_server.Auth.Model;
 using saitynai_server.Data.Dtos.Advertisements;
@@ -27,6 +26,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetAll(int gameId)
         {
             var game = await _gamesRepository.GetAsync(gameId);
@@ -39,6 +39,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpGet("{advertisementId}")]
+        [AuthorizeByRoles(Roles.Admin, Roles.User)]
         public async Task<ActionResult<AdvertisementDto>> Get(int gameId, int advertisementId)
         {
             var game = await _gamesRepository.GetAsync(gameId);
@@ -49,11 +50,15 @@ namespace saitynai_server.Controllers
             if (advertisement == null)
                 return NotFound($"Advertisement with fkGameId '{gameId}' and id '{advertisementId}' not found.");
 
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, advertisement, PolicyNames.ResourceOwner);
+            if (!authorizationResult.Succeeded)
+                return Forbid(); // could be 404 for security
+
             return Ok(_mapper.Map<AdvertisementDto>(advertisement));
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.User)]
+        [AuthorizeByRoles(Roles = Roles.User)]
         public async Task<ActionResult<AdvertisementDto>> Create(int gameId, AdvertisementPostDto advertisementPostDto)
         {
             var game = await _gamesRepository.GetAsync(gameId);
@@ -77,7 +82,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpPut("{advertisementId}")]
-        [Authorize(Roles = Roles.User + "," + Roles.Admin)]
+        [AuthorizeByRoles(Roles.Admin, Roles.User)]
         public async Task<ActionResult<AdvertisementDto>> Update(int gameId, int advertisementId, AdvertisementUpdateDto advertisementUpdateDto)
         {
             var game = await _gamesRepository.GetAsync(gameId);
@@ -107,7 +112,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpDelete("{advertisementId}")]
-        [Authorize(Roles = Roles.User + "," + Roles.Admin)]
+        [AuthorizeByRoles(Roles.Admin, Roles.User)]
         public async Task<ActionResult> Remove(int gameId, int advertisementId)
         {
             var game = await _gamesRepository.GetAsync(gameId);
@@ -117,6 +122,10 @@ namespace saitynai_server.Controllers
             var advertisement = await _advertisementsRepository.GetAsync(gameId, advertisementId);
             if(advertisement == null)
                 return NotFound($"Advertisement with fkGameId '{gameId}' and id '{advertisementId}' not found.");
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, advertisement, PolicyNames.ResourceOwner);
+            if (!authorizationResult.Succeeded)
+                return Forbid(); // could be 404 for security
 
             await _advertisementsRepository.DeleteAsync(advertisement);
 

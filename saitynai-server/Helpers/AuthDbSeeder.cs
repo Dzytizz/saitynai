@@ -2,7 +2,7 @@
 using saitynai_server.Auth;
 using saitynai_server.Auth.Model;
 
-namespace saitynai_server.Data
+namespace saitynai_server.Helpers
 {
     public class AuthDbSeeder
     {
@@ -23,7 +23,7 @@ namespace saitynai_server.Data
 
         private async Task AddDefaultRoles()
         {
-            foreach(var role in Roles.All)
+            foreach (var role in Roles.All)
             {
                 var roleExists = await _roleManager.RoleExistsAsync(role);
                 if (!roleExists)
@@ -40,7 +40,7 @@ namespace saitynai_server.Data
             };
 
             var existingAdminUser = await _userManager.FindByNameAsync(newAdminUser.UserName);
-            if(existingAdminUser == null)
+            if (existingAdminUser == null)
             {
                 var createAdminUserResult = await _userManager.CreateAsync(newAdminUser, "password123");
                 if (createAdminUserResult.Succeeded)

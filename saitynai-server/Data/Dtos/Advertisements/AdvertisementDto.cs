@@ -1,4 +1,6 @@
-﻿namespace saitynai_server.Data.Dtos.Advertisements
+﻿using saitynai_server.Data.Dtos.Games;
+
+namespace saitynai_server.Data.Dtos.Advertisements
 {
     public record AdvertisementDto
     (
@@ -9,8 +11,7 @@
         int Condition,
         decimal Price,
         string Photos,
-        Game? ExchangeToGame,
-        Game FkGame
-        //int FkClientId
+        GameDto? ExchangeToGame,
+        GameDto FkGame
     );
 }

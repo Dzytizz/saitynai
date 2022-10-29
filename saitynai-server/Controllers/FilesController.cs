@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using saitynai_server.Auth.Model;
 using System.Text;
 
 namespace saitynai_server.Controllers
@@ -13,6 +14,7 @@ namespace saitynai_server.Controllers
         private readonly string[] _acceptedExtensions = new string[] { ".jpg", ".png", ".jpeg", ".webp" };
 
         [HttpPost]
+        [AuthorizeByRoles(Roles.Admin, Roles.User)]
         public async Task<ActionResult<string>> Upload(List<IFormFile> files)
         {
             StringBuilder fileNames = new StringBuilder();

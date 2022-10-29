@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using saitynai_server.Auth.Model;
 using saitynai_server.Data.Dtos.Games;
 using saitynai_server.Helpers;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace saitynai_server.Controllers
 {
@@ -20,6 +24,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GameDto>>> GetAll()
         {
             var games = await _gamesRepository.GetAllAsync();
@@ -28,6 +33,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpGet("{id}")]
+        [AuthorizeByRoles(Roles.Admin, Roles.User)]
         public async Task<ActionResult<GameDto>> Get(int id)
         {
             var game = await _gamesRepository.GetAsync(id);
@@ -38,6 +44,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpPost]
+        [AuthorizeByRoles(Roles.Admin)]
         public async Task<ActionResult<GameDto>> Create(GamePostDto gamePostDto)
         {
             var game = _mapper.Map<Game>(gamePostDto);
@@ -50,6 +57,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpPut("{id}")]
+        [AuthorizeByRoles(Roles.Admin)]
         public async Task<ActionResult<GameDto>> Update(int id, GameUpdateDto gameUpdateDto)
         {
             var game = await _gamesRepository.GetAsync(id);
@@ -67,6 +75,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpDelete("{id}")]
+        [AuthorizeByRoles(Roles.Admin)]
         public async Task<ActionResult> Remove(int id)
         {
             var currentGame = await _gamesRepository.GetAsync(id);

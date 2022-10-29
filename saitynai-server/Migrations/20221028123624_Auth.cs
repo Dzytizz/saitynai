@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace saitynai_server.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Auth : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -277,7 +277,9 @@ namespace saitynai_server.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn),
                     Description = table.Column<string>(type: "varchar(511)", maxLength: 511, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    FkAdvertisementId = table.Column<int>(type: "int", nullable: false)
+                    FkAdvertisementId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -286,6 +288,12 @@ namespace saitynai_server.Migrations
                         name: "FK_Comments_Advertisements_FkAdvertisementId",
                         column: x => x.FkAdvertisementId,
                         principalTable: "Advertisements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -347,6 +355,11 @@ namespace saitynai_server.Migrations
                 name: "IX_Comments_FkAdvertisementId",
                 table: "Comments",
                 column: "FkAdvertisementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -5,7 +5,6 @@
         int Id,
         DateTime EditDate,
         string Description,
-        //int FkClientId,
         int FkAdvertisementId
     );
 }
