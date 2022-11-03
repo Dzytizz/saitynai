@@ -1,19 +1,27 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace saitynai_server.Data
 {
     public class TablegamesContext : IdentityDbContext
     {
-        public DbSet<Game> Games { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Advertisement> Advertisements { get; set; }
+        private readonly IConfiguration _configuration;
+
+        public DbSet<Game> Games { get; set; } = null!;
+        public DbSet<Comment> Comments { get; set; } = null!;
+        public DbSet<Advertisement> Advertisements { get; set; } = null!;
+
+        public TablegamesContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                string connectionString = File.ReadAllText("connectionString.txt");
-                optionsBuilder.UseMySql(connectionString, Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.36-mysql"));
+                //optionsBuilder.UseMySql(_configuration.GetValue<string>("MySQLConnectionString"), ServerVersion.Parse("5.7.36-mysql"));
+                optionsBuilder.UseMySql("server = localhost; port = 3306; database = saitynai; uid = root; pwd =;", ServerVersion.Parse("5.7.36-mysql"));
             }
         }
     }
