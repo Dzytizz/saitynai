@@ -20,9 +20,6 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 // Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddIdentity<User, IdentityRole>(o =>
@@ -66,20 +63,16 @@ builder.Services.AddSingleton<IAuthorizationHandler, ResourceOwnerAuthorizationH
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
 app.UseRouting();
 app.MapControllers();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//var dbSeeder = app.Services.CreateScope().ServiceProvider.GetRequiredService<AuthDbSeeder>();
-//await dbSeeder.SeedAsync();
+using var scope = app.Services.CreateScope();
+var dbContext = scope.ServiceProvider.GetRequiredService<TablegamesContext>();
+dbContext.Database.Migrate();
+
+var dbSeeder = scope.ServiceProvider.GetRequiredService<AuthDbSeeder>();
+await dbSeeder.SeedAsync();
 
 app.Run();
