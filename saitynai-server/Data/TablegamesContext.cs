@@ -20,8 +20,8 @@ namespace saitynai_server.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseMySql(_configuration.GetValue<string>("MySQLConnectionString"), ServerVersion.Parse("5.7.36-mysql"));
-                optionsBuilder.UseMySql("server = localhost; port = 3306; database = saitynai; uid = root; pwd =;", ServerVersion.Parse("5.7.36-mysql"));
+                optionsBuilder.UseMySql(_configuration.GetValue<string>("MySQLConnectionString"), ServerVersion.Parse("8-mysql"));
+                //optionsBuilder.UseMySql("server = localhost; port = 3306; database = saitynai; uid = root; pwd =;", ServerVersion.Parse("5.7.36-mysql"));
             }
         }
     }
