@@ -1,17 +1,25 @@
 # syntax=docker/dockerfile:1
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build-env
 WORKDIR /saitynai-server
     
 # Copy csproj and restore as distinct layers
 COPY saitynai-server/*.csproj .
-RUN dotnet restore
+RUN dotnet restore -r linux-musl-x64 /p:PublishReadyToRun=true
     
 # Copy everything else and build
 COPY saitynai-server/. .
-RUN dotnet publish -c Release -o out 
+RUN dotnet publish -c Release -o out -r linux-musl-x64 --self-contained true --no-restore /p:PublishReadyToRun=true /p:PublishSingleFile=true
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-alpine-amd64
 WORKDIR /saitynai-server
 COPY --from=build-env /saitynai-server/out .
 ENTRYPOINT ["dotnet", "saitynai-server.dll"]
+
+ENV \
+     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
+     LC_ALL=en_US.UTF-8 \
+     LANG=en_US.UTF-8
+ RUN apk add --no-cache \
+     icu-data-full \
+     icu-libs
