@@ -5,16 +5,13 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0
 WORKDIR /src
 COPY ["saitynai-server.csproj", "."]
 RUN dotnet restore "./saitynai-server.csproj"
 COPY . .
 WORKDIR "/src/."
 RUN dotnet build "saitynai-server.csproj" -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "saitynai-server.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
