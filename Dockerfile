@@ -8,13 +8,13 @@ RUN dotnet restore -r linux-musl-x64 /p:PublishReadyToRun=true
     
 # Copy everything else and build
 COPY saitynai-server/. .
-RUN dotnet publish -c Release -o out -r linux-musl-x64 --self-contained true --no-restore /p:PublishReadyToRun=true /p:PublishSingleFile=true
+RUN dotnet publish -c Release -o /app -r linux-musl-x64 --self-contained true --no-restore /p:PublishReadyToRun=true /p:PublishSingleFile=true
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-alpine-amd64
-WORKDIR /saitynai-server
-COPY --from=build-env /saitynai-server/out .
-ENTRYPOINT ["dotnet", "saitynai-server.dll"]
+WORKDIR /app
+COPY --from=build-env /app .
+ENTRYPOINT ["./saitynai-server"]
 
 ENV \
      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
