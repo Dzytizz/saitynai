@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using saitynai_server.Helpers;
 
+//dotnet ef migrations add "Name"
+//dotnet ef database update
+
 //migrationBuilder.Sql("SET default_storage_engine=INNODB");
 //migrationBuilder.Sql("SET GLOBAL innodb_default_row_format=DYNAMIC");
 
@@ -61,12 +64,19 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddSingleton<IAuthorizationHandler, ResourceOwnerAuthorizationHandler>();
 
+// SWAGGER UI
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 app.UseRouting();
 app.MapControllers();
 app.UseAuthentication();
 app.UseAuthorization();
+
+// SWAGGER UI
+app.UseSwagger();
+app.UseSwaggerUI();
 
 using var scope = app.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<TablegamesContext>();
