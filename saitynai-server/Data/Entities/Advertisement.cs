@@ -15,6 +15,6 @@ namespace saitynai_server.Entities
         public Game? ExchangeToGame { get; set; }
         [Required] public Game FkGame { get; set; } = null!;
         [Required] public string UserId { get; set; } = null!;
-        public User User { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
     }
 }
