@@ -10,11 +10,11 @@ namespace saitynai_server.Entities
         [Timestamp] public DateTime EditDate { get; set; }
         [Required, StringLength(511)] public string Description { get; set; } = null!;
         [Required] public int? Condition { get; set; }
-        [Required] public decimal? Price { get; set; }
+        [Required, Precision(18,2)] public decimal? Price { get; set; }
         [Required, StringLength(511)] public string Photos { get; set; } = null!;
         public Game? ExchangeToGame { get; set; }
         [Required] public Game FkGame { get; set; } = null!;
         [Required] public string UserId { get; set; } = null!;
-        public virtual User User { get; set; } = null!;
+        public User User { get; set; } = null!;
     }
 }

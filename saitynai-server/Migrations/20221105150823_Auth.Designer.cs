@@ -12,7 +12,7 @@ using saitynai_server.Data;
 namespace saitynai_server.Migrations
 {
     [DbContext(typeof(TablegamesContext))]
-    [Migration("20221105145426_Auth")]
+    [Migration("20221105150823_Auth")]
     partial class Auth
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -263,6 +263,7 @@ namespace saitynai_server.Migrations
 
                     b.Property<decimal?>("Price")
                         .IsRequired()
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Title")

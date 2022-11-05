@@ -184,7 +184,7 @@ namespace saitynai_server.Migrations
                     EditDate = table.Column<DateTime>(type: "datetime2", rowVersion: true, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(511)", maxLength: 511, nullable: false),
                     Condition = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Photos = table.Column<string>(type: "nvarchar(511)", maxLength: 511, nullable: false),
                     ExchangeToGameId = table.Column<int>(type: "int", nullable: true),
                     FkGameId = table.Column<int>(type: "int", nullable: false),
@@ -198,7 +198,7 @@ namespace saitynai_server.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Advertisements_Games_ExchangeToGameId",
                         column: x => x.ExchangeToGameId,
@@ -237,7 +237,7 @@ namespace saitynai_server.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

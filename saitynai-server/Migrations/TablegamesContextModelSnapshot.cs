@@ -261,6 +261,7 @@ namespace saitynai_server.Migrations
 
                     b.Property<decimal?>("Price")
                         .IsRequired()
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Title")
