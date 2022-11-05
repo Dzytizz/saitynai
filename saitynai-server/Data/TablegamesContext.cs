@@ -20,7 +20,8 @@ namespace saitynai_server.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(_configuration.GetValue<string>("PostgreSQLConnectionString"));
+                //optionsBuilder.UseNpgsql(_configuration.GetValue<string>("PostgreSQLConnectionString"));
+                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING"));
             }
         }
     }
