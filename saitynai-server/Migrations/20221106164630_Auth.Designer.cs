@@ -12,7 +12,7 @@ using saitynai_server.Data;
 namespace saitynai_server.Migrations
 {
     [DbContext(typeof(TablegamesContext))]
-    [Migration("20221105150823_Auth")]
+    [Migration("20221106164630_Auth")]
     partial class Auth
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -246,8 +246,6 @@ namespace saitynai_server.Migrations
                         .HasColumnType("nvarchar(511)");
 
                     b.Property<DateTime>("EditDate")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ExchangeToGameId")
@@ -300,8 +298,6 @@ namespace saitynai_server.Migrations
                         .HasColumnType("nvarchar(511)");
 
                     b.Property<DateTime>("EditDate")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("FkAdvertisementId")

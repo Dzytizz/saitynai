@@ -181,7 +181,7 @@ namespace saitynai_server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(63)", maxLength: 63, nullable: false),
-                    EditDate = table.Column<DateTime>(type: "datetime2", rowVersion: true, nullable: false),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(511)", maxLength: 511, nullable: false),
                     Condition = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
@@ -218,7 +218,7 @@ namespace saitynai_server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EditDate = table.Column<DateTime>(type: "datetime2", rowVersion: true, nullable: false),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(511)", maxLength: 511, nullable: false),
                     FkAdvertisementId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)

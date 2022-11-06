@@ -244,8 +244,6 @@ namespace saitynai_server.Migrations
                         .HasColumnType("nvarchar(511)");
 
                     b.Property<DateTime>("EditDate")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ExchangeToGameId")
@@ -298,8 +296,6 @@ namespace saitynai_server.Migrations
                         .HasColumnType("nvarchar(511)");
 
                     b.Property<DateTime>("EditDate")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("FkAdvertisementId")
@@ -436,7 +432,7 @@ namespace saitynai_server.Migrations
                     b.HasOne("saitynai_server.Auth.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ExchangeToGame");
@@ -457,7 +453,7 @@ namespace saitynai_server.Migrations
                     b.HasOne("saitynai_server.Auth.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("FkAdvertisement");

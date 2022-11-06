@@ -7,7 +7,7 @@ namespace saitynai_server.Entities
     {
         [Required] public int Id { get; set; }
         [Required, StringLength(63)] public string Title { get; set; } = null!;
-        [Timestamp] public DateTime EditDate { get; set; }
+        [Required] public DateTime EditDate { get; set; }
         [Required, StringLength(511)] public string Description { get; set; } = null!;
         [Required] public int? Condition { get; set; }
         [Required, Precision(18,2)] public decimal? Price { get; set; }
