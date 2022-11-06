@@ -101,9 +101,12 @@ namespace saitynai_server.Controllers
             if (!authorizationResult.Succeeded)
                 return Forbid(); // could be 404 for security
 
-            _mapper.Map(advertisementUpdateDto, oldAdvertisement);
             if (!oldAdvertisement.Photos.Equals(advertisementUpdateDto.Photos))
                 FilesController.Delete(oldAdvertisement.Photos);
+
+            _mapper.Map(advertisementUpdateDto, oldAdvertisement);
+            if (game.Photos == null)
+                game.Photos = FilesController._defaultImage;
             oldAdvertisement.ExchangeToGame = exchangeToGame;
 
             await _advertisementsRepository.UpdateAsync(oldAdvertisement);

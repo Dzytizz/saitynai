@@ -68,6 +68,8 @@ namespace saitynai_server.Controllers
                 FilesController.Delete(game.Photos);
 
             _mapper.Map(gameUpdateDto, game);
+            if (game.Photos == null)
+                game.Photos = FilesController._defaultImage;
    
             await _gamesRepository.UpdateAsync(game);
 
