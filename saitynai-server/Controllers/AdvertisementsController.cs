@@ -72,6 +72,7 @@ namespace saitynai_server.Controllers
             var advertisement = _mapper.Map<Advertisement>(advertisementPostDto);
             if(advertisement.Photos == null)
                 advertisement.Photos = "default.jpg";
+            advertisement.EditDate = DateTime.UtcNow;
             advertisement.ExchangeToGame = exchangeToGame;
             advertisement.FkGame = game;
             advertisement.UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
@@ -107,6 +108,7 @@ namespace saitynai_server.Controllers
             _mapper.Map(advertisementUpdateDto, oldAdvertisement);
             if (game.Photos == null)
                 game.Photos = FilesController._defaultImage;
+            oldAdvertisement.EditDate = DateTime.UtcNow;
             oldAdvertisement.ExchangeToGame = exchangeToGame;
 
             await _advertisementsRepository.UpdateAsync(oldAdvertisement);

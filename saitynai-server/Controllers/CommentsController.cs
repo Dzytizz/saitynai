@@ -81,6 +81,7 @@ namespace saitynai_server.Controllers
                 return NotFound($"Advertisement with fkGameId '{gameId}' and id '{advertisementId}' not found.");
 
             var comment = _mapper.Map<Comment>(commentPostDto);
+            comment.EditDate = DateTime.UtcNow;
             comment.FkAdvertisement = advertisement;
             comment.UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
 
@@ -110,6 +111,7 @@ namespace saitynai_server.Controllers
                 return Forbid(); // could be 404 for security
 
             _mapper.Map(commentUpdateDto, oldComment);
+            oldComment.EditDate = DateTime.UtcNow;
 
             await _commentsRepository.UpdateAsync(oldComment);
 
