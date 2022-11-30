@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Appsettings
+saitynai-server/appsettings.Development.json
+
 # Files folder
 saitynai-server/Files/
 
@@ -458,5 +461,3 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-saitynai-server/appsettings.Development.json
-saitynai-server/appsettings.json
