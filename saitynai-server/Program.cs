@@ -10,6 +10,7 @@ using System.Text;
 using saitynai_server.Auth;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
+using saitynai_server.Controllers;
 using saitynai_server.Helpers;
 
 //dotnet ef migrations add "Name"
@@ -55,6 +56,7 @@ builder.Services.AddTransient<IGamesRepository, GamesRepository>();
 builder.Services.AddTransient<IAdvertisementsRepository, AdvertisementsRepository>();
 builder.Services.AddTransient<ICommentsRepository, CommentsRepository>();
 builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
+builder.Services.AddTransient<IFileManagementController, FileManagementController>();
 builder.Services.AddScoped<AuthDbSeeder>();
 
 builder.Services.AddAuthorization(options =>

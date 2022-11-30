@@ -6,18 +6,24 @@ using Microsoft.Extensions.Configuration;
 
 namespace saitynai_server.Controllers
 {
+    public interface IFileManagementController
+    {
+        Task<IActionResult> UploadImages(IList<IFormFile> files);
+        Task<ActionResult> Delete(string fileName);
+    }
+
     [Route("api/v1/files")]
     [ApiController]
-    public class FilesController : ControllerBase
+    public class FileManagementController : ControllerBase, IFileManagementController
     {
+        private readonly IConfiguration _configuration;
+
         public const string _defaultImage = "default.jpg";
         private const string _containerName = "images";
         private const string _saveExtension = ".jpg";
         private readonly string[] _acceptedExtensions = new string[] { ".jpg", ".png", ".jpeg", ".webp" };
 
-        private readonly IConfiguration _configuration;
-
-        public FilesController(IConfiguration configuration)
+        public FileManagementController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -57,10 +63,14 @@ namespace saitynai_server.Controllers
             return Created($"/api/v1/files", fileNames.ToString());
         }
 
-        public static async void Delete(string fileName)
+        [HttpDelete]
+        [AuthorizeByRoles(Roles.Admin)]
+        public async Task<ActionResult> Delete(string fileName)
         {
             BlobClient blobClient = new BlobClient(_configuration["AzureStorageKey"], _containerName, fileName);
             await blobClient.DeleteIfExistsAsync();
+
+            return NoContent();
         }
 
         //[HttpPost]

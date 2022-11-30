@@ -16,11 +16,13 @@ namespace saitynai_server.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IGamesRepository _gamesRepository;
+        private readonly IFileManagementController _fileManagmentController;
 
-        public GamesController(IMapper mapper, IGamesRepository gamesRepository)
+        public GamesController(IMapper mapper, IGamesRepository gamesRepository, IFileManagementController fileManagementController)
         {
             _mapper = mapper;
             _gamesRepository = gamesRepository;
+            _fileManagmentController = fileManagementController;
         }
 
         [HttpGet]
@@ -65,11 +67,11 @@ namespace saitynai_server.Controllers
                 return NotFound($"Game with id '{id}' not found.");
 
             if (!game.Photos.Equals(gameUpdateDto.Photos))
-                FilesController.Delete(game.Photos);
+                await _fileManagmentController.Delete(game.Photos);
 
             _mapper.Map(gameUpdateDto, game);
             if (game.Photos == null)
-                game.Photos = FilesController._defaultImage;
+                game.Photos = FileManagementController._defaultImage;
    
             await _gamesRepository.UpdateAsync(game);
 
@@ -84,7 +86,7 @@ namespace saitynai_server.Controllers
             if (currentGame == null)
                 return NotFound($"Game with id '{id}' not found.");
 
-            FilesController.Delete(currentGame.Photos);
+            await _fileManagmentController.Delete(currentGame.Photos);
 
             await _gamesRepository.DeleteAsync(currentGame);
 

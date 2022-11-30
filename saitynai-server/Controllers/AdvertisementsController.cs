@@ -16,13 +16,15 @@ namespace saitynai_server.Controllers
         private readonly IAuthorizationService _authorizationService;
         private readonly IAdvertisementsRepository _advertisementsRepository;
         private readonly IGamesRepository _gamesRepository;
+        private readonly IFileManagementController _fileManagementController;
 
-        public AdvertisementsController(IMapper mapper, IAuthorizationService authorizationService, IAdvertisementsRepository advertisementsRepository, IGamesRepository gamesRepository)
+        public AdvertisementsController(IMapper mapper, IAuthorizationService authorizationService, IAdvertisementsRepository advertisementsRepository, IGamesRepository gamesRepository, IFileManagementController fileManagementController)
         {
             _mapper = mapper;
             _authorizationService = authorizationService;
             _advertisementsRepository = advertisementsRepository;
             _gamesRepository = gamesRepository;
+            _fileManagementController = fileManagementController;
         }
 
         [HttpGet]
@@ -103,11 +105,11 @@ namespace saitynai_server.Controllers
                 return Forbid(); // could be 404 for security
 
             if (!oldAdvertisement.Photos.Equals(advertisementUpdateDto.Photos))
-                FilesController.Delete(oldAdvertisement.Photos);
+                await _fileManagementController.Delete(oldAdvertisement.Photos);
 
             _mapper.Map(advertisementUpdateDto, oldAdvertisement);
             if (game.Photos == null)
-                game.Photos = FilesController._defaultImage;
+                game.Photos = FileManagementController._defaultImage;
             oldAdvertisement.EditDate = DateTime.UtcNow;
             oldAdvertisement.ExchangeToGame = exchangeToGame;
 

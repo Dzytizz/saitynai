@@ -67,7 +67,7 @@ namespace saitynai_server.Helpers
                     MaxPlayers = 4,
                     Rules = "Žaidimo eigoje  rinksite kauliukus ir iš jų dėliosite savo vitražą. Ne visi kauliukai dera tarpusavyje: panašių atspalvių kauliukai negali būti greta vienas kito, turimos žaidimo lentelės taip pat įveda papildomų apribojimų, kuriuos galite apeiti panaudodami specialius įrankius.",
                     Difficulty = 3,
-                    Photos = FilesController._defaultImage
+                    Photos = FileManagementController._defaultImage
                 },
                 new Game
                 {
@@ -77,7 +77,7 @@ namespace saitynai_server.Helpers
                     MaxPlayers = 10,
                     Rules = "Paeiliui, žaidėjai bando padėti kortą sutampančią pagal skaičių arba spalvą su korta ant stalo viduryje esančios kortų krūvos viršaus. Jeigu jie negali kortos dėti, jie turi traukti naują kortą, ir jeigu vis dar negali, turi praleisti ėjimą.",
                     Difficulty = 2,
-                    Photos = FilesController._defaultImage
+                    Photos = FileManagementController._defaultImage
                 },
                 new Game
                 {
@@ -87,7 +87,7 @@ namespace saitynai_server.Helpers
                     MaxPlayers = 8,
                     Rules = "Išsirink labiausiai patinkančią „Monopolio“ figūrėlę, ridenk kauliukus ir judėk žaidimo lenta, stengdamasis įsigyti kuo daugiau nuosavybės!",
                     Difficulty = 4,
-                    Photos = FilesController._defaultImage
+                    Photos = FileManagementController._defaultImage
                 },
                 new Game
                 {
@@ -97,7 +97,7 @@ namespace saitynai_server.Helpers
                     MaxPlayers = 10,
                     Rules = "Žaidėjai žaidžia su įvairių spalvų kortelėmis, turinčiomis simbolius. Jei žaidimo lentoje padėtų kortelių simboliai sutampa, žaidėjai turi kuo greičiau žaimti medinę figūrėlę.",
                     Difficulty = 2,
-                    Photos = FilesController._defaultImage
+                    Photos = FileManagementController._defaultImage
                 }
             };
 
