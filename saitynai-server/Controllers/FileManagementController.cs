@@ -28,7 +28,7 @@ namespace saitynai_server.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost("[action]")]
+        [HttpPost]
         [AuthorizeByRoles(Roles.Admin, Roles.User)]
         public async Task<IActionResult> UploadImages(IList<IFormFile> files)
         {
@@ -63,7 +63,7 @@ namespace saitynai_server.Controllers
             return Created($"/api/v1/files", fileNames.ToString());
         }
 
-        [HttpDelete]
+        [HttpDelete("{fileName}")]
         [AuthorizeByRoles(Roles.Admin)]
         public async Task<ActionResult> Delete(string fileName)
         {
