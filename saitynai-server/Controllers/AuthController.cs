@@ -10,7 +10,7 @@ namespace saitynai_server.Controllers
 {
     [ApiController]
     [AllowAnonymous]
-    [Route("api")]
+    [Route("api/v1")]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
@@ -51,11 +51,11 @@ namespace saitynai_server.Controllers
         {
             var user = await _userManager.FindByNameAsync(loginUserDto.UserName);
             if (user == null)
-                return BadRequest("Username and(or) password is invalid.");
+                return Unauthorized("Username and(or) password is invalid.");
 
             var isPasswordValid = await _userManager.CheckPasswordAsync(user, loginUserDto.Password);
             if (!isPasswordValid)
-                return BadRequest("Username and(or) password is invalid.");
+                return Unauthorized("Username and(or) password is invalid.");
 
             var roles = await _userManager.GetRolesAsync(user);
             var accessToken = _jwtTokenService.CreateAccessToken(user.UserName, user.Id, roles);

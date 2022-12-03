@@ -19,8 +19,20 @@ using saitynai_server.Helpers;
 //migrationBuilder.Sql("SET default_storage_engine=INNODB");
 //migrationBuilder.Sql("SET GLOBAL innodb_default_row_format=DYNAMIC");
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            //policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        });
+});
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -71,12 +83,15 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
 app.UseRouting();
-app.MapControllers();
+
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseHttpsRedirection();
+app.MapControllers();
 
 // SWAGGER UI
 app.UseSwagger();
