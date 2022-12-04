@@ -14,30 +14,19 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import authService from "../../services/auth.service";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCurrentUser } from "../../CurrentUserContext";
 
 const theme = createTheme();
 
 export default function SignIn() {
+  const {login} = useCurrentUser()
   const [error, setError] = useState("")
   const navigate = useNavigate()
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const loginInfo = {
-      UserName: data.get('username'),
-      Password: data.get('password')
-    }
-    authService.login(loginInfo).then((res) => {
-      setError("");
-      navigate("/games");
-      sessionStorage.setItem("access_token", res.data);
-    
-      console.log(res.data)
-    }).catch((error) => {
-      setError("Wrong username or password. Try again.");
-      console.error(error);
-    });
+    login(data);
   };
 
   return (

@@ -12,31 +12,41 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link, useNavigate } from "react-router-dom";
+import { Role } from "./roles";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useCurrentUser } from "../CurrentUserContext";
 
 const pages = [
   {
     name: "Games",
     url: "/games",
+    roles: [Role.User, Role.Admin],
   },
   {
     name: "Add Game",
     url: "/games/new",
+    roles: [Role.User, Role.Admin],
   },
   {
     name: "Login",
     url: "/login",
+    roles: null,
   },
   {
     name: "Register",
     url: "/register",
+    roles: null,
   },
 ];
 
 //const settings = ["Log in", "Log out"];
 
 const MainNavigation = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const {currentUser, logout} = useCurrentUser();
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -56,8 +66,23 @@ const MainNavigation = () => {
 
   const logOut = () => {
     handleCloseUserMenu();
-    sessionStorage.removeItem("access_token");
-    navigate("/games");
+    logout();
+    //navigate("/games");
+  }
+
+  function rolesNotNullAndContain (page) {
+    if(page.roles === null && currentUser === null) {
+      return true;
+    }
+    else if (page.roles === null && currentUser !== null){
+      return false;
+    }
+    if(currentUser === null) {
+      return false;
+    }
+    else {
+      return page.roles.some(r => currentUser.roles.includes(r))
+    }
   }
 
   return (
@@ -103,6 +128,7 @@ const MainNavigation = () => {
               }}
             >
               {pages.map((page) => (
+                rolesNotNullAndContain(page) ?
                 <MenuItem
                   key={page.name}
                   onClick={() => {
@@ -112,6 +138,7 @@ const MainNavigation = () => {
                 >
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
+                : null
               ))}
             </Menu>
           </Box>
@@ -125,13 +152,15 @@ const MainNavigation = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
+              rolesNotNullAndContain(page) ?
+              (<Button
                 key={page.name}
                 onClick={() => navigate(page.url)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page.name}
-              </Button>
+              </Button>)
+              : null
             ))}
           </Box>
 

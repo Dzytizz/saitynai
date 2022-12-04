@@ -10,6 +10,6 @@ namespace saitynai_server.Auth.Model
 
         public record UserDto(string Id, string UserName, string Email);
 
-        public record SuccessfulLoginDto(string AccessToken); // add refresh token here
+        public record SuccessfulLoginDto(string AccessToken, IList<string> Roles); // add refresh token here
     }
 }
