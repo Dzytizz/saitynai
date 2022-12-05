@@ -9,7 +9,8 @@ export const CurrentUserContext = React.createContext();
 
 export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = React.useState(null);
-  
+  const [error, setError] = React.useState("");
+
   function checkIfExists(){
     let token = sessionStorage.getItem("access_token");
     let roles = sessionStorage.getItem("roles");
@@ -23,6 +24,7 @@ export const CurrentUserProvider = ({ children }) => {
   }, []);
 
   const login = (data) => {
+    setError("")
     const loginInfo = {
       UserName: data.get('username'),
       Password: data.get('password')
@@ -31,9 +33,11 @@ export const CurrentUserProvider = ({ children }) => {
       sessionStorage.setItem("access_token", res.data.accessToken);
       sessionStorage.setItem("roles", res.data.roles);
       setCurrentUser(createUserData(res.data.accessToken, res.data.roles))
+      //setError("");
       //console.log(res.data)
     }).catch((error) => {
       setCurrentUser(null)
+      setError("Wrong username or password. Try again")
       //console.error(error);
     });
   }
@@ -45,7 +49,7 @@ export const CurrentUserProvider = ({ children }) => {
   }
 
   return (
-    <CurrentUserContext.Provider value={{currentUser, login, logout}}>
+    <CurrentUserContext.Provider value={{currentUser, error, login, logout}}>
       {children}
     </CurrentUserContext.Provider>
   );

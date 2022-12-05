@@ -19,14 +19,13 @@ import { useCurrentUser } from "../../CurrentUserContext";
 const theme = createTheme();
 
 export default function SignIn() {
-  const {login} = useCurrentUser()
-  const [error, setError] = useState("")
+  const {login, error} = useCurrentUser()
   const navigate = useNavigate()
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    login(data);
+    login(data)
   };
 
   return (

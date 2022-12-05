@@ -26,7 +26,7 @@ const pages = [
   {
     name: "Add Game",
     url: "/games/new",
-    roles: [Role.User, Role.Admin],
+    roles: [Role.Admin],
   },
   {
     name: "Login",
@@ -82,6 +82,15 @@ const MainNavigation = () => {
     }
     else {
       return page.roles.some(r => currentUser.roles.includes(r))
+    }
+  }
+
+  function userRolesNotNull(){
+    if(currentUser === null) {
+      return false;
+    }
+    else {
+      return true;
     }
   }
 
@@ -165,11 +174,13 @@ const MainNavigation = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            {userRolesNotNull() ? 
+            (<Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Profile" />
               </IconButton>
-            </Tooltip>
+            </Tooltip>) 
+            : null}
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
