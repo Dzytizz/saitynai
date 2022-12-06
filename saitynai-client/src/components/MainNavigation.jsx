@@ -16,29 +16,7 @@ import { Role } from "./roles";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useCurrentUser } from "../CurrentUserContext";
-
-const pages = [
-  {
-    name: "Games",
-    url: "/games",
-    roles: [Role.User, Role.Admin],
-  },
-  {
-    name: "Add Game",
-    url: "/games/new",
-    roles: [Role.Admin],
-  },
-  {
-    name: "Login",
-    url: "/login",
-    roles: null,
-  },
-  {
-    name: "Register",
-    url: "/register",
-    roles: null,
-  },
-];
+import { pages } from "../constants";
 
 //const settings = ["Log in", "Log out"];
 
@@ -76,6 +54,9 @@ const MainNavigation = () => {
     }
     else if (page.roles === null && currentUser !== null){
       return false;
+    }
+    if(page.roles.includes(null) && currentUser === null) {
+      return true;
     }
     if(currentUser === null) {
       return false;
