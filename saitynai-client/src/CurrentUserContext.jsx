@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import authService from "./services/auth.service";
+import { Link, useNavigate } from "react-router-dom";
 
 function createUserData(access_token, roles) {
   return {access_token, roles}
@@ -8,6 +9,7 @@ function createUserData(access_token, roles) {
 export const CurrentUserContext = React.createContext();
 
 export const CurrentUserProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [currentUser, setCurrentUser] = React.useState(null);
   const [error, setError] = React.useState("");
 
@@ -33,6 +35,7 @@ export const CurrentUserProvider = ({ children }) => {
       sessionStorage.setItem("access_token", res.data.accessToken);
       sessionStorage.setItem("roles", res.data.roles);
       setCurrentUser(createUserData(res.data.accessToken, res.data.roles))
+      navigate('/')
       //setError("");
       //console.log(res.data)
     }).catch((error) => {

@@ -7,6 +7,7 @@ import { GameAdd } from './components/Games/GameAdd'
 import MainNavigation from './components/MainNavigation';
 import './App.css'
 import { CurrentUserProvider } from './CurrentUserContext';
+import { Footer } from './components/Footer';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
         </Routes>
+        <Footer/>
       </>
     </CurrentUserProvider>
     

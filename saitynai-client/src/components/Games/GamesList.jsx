@@ -11,6 +11,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme();
 
+const imageStyle ={
+    objectFit: 'contain'
+}
 
 function createData(id, title, description, minPlayers, maxPlayers, rules, difficulty, photos) {
     return {id, title, description, minPlayers, maxPlayers, rules, difficulty, photos}
@@ -36,12 +39,12 @@ export function GamesList(){
     <Box>
         <Grid container spacing={{ xs: 0, md: 1 }} >
             {games.map((game, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index} height="300px" paddingBottom={"40px"} onClick = {() => navigate(`/games/${game.title}`)}>
-                <img
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index} height="auto"  onClick = {() => navigate(`/games/${game.id}`)}>
+                <img style={imageStyle}
                     width="100%"
-                    height="100%"
+                    height='250px'
                     src={`https://saitynaistorage.blob.core.windows.net/images/${game.photos.split(';')[0]}`}
-                    srcSet={`https://saitynaistorage.blob.core.windows.net/images/${game.photos.split(';')[0]}`}
+                    //srcSet={`https://saitynaistorage.blob.core.windows.net/images/${game.photos.split(';')[0]}`}
                     alt={game.title}
                     loading="lazy"
                    

@@ -35,7 +35,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpGet("{id}")]
-        [AuthorizeByRoles(Roles.Admin, Roles.User)]
+        [AllowAnonymous]
         public async Task<ActionResult<GameDto>> Get(int id)
         {
             var game = await _gamesRepository.GetAsync(id);
