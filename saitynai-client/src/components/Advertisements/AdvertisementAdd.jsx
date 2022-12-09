@@ -11,72 +11,44 @@ import {
   } from '@mui/material';
 import React, { useState } from 'react';
 import InsertPhotoRoundedIcon from '@mui/icons-material/InsertPhotoRounded';
-import gameService from "../../services/game.service";
+import advertisementService from '../../services/advertisement.service';
 import fileService from '../../services/file.service';
+import { useParams } from "react-router-dom"
 import {useNavigate } from "react-router-dom";
 
-export function GameAdd(){
+export function AdvertisementAdd(){
     const navigate = useNavigate();
     const [photos, setPhotos] = useState('');
-    const [minPlayers, setMinPlayers] = useState(1);
-    const [maxPlayers, setMaxPlayers] = useState(1);
-    const [difficulty, setDifficulty] = useState(3);
+    const [condition, setCondition] = useState(5);
+    const {gameId} = useParams()
 
     const handlePhotoChange = (event) => {
         setPhotos(event.target.files[0]);
+        console.log(photos)
     };
 
-    const handleMinPlayersChange = (e) => {
-        setMinPlayers(e.target.value);
-    }
+    const handleConditionChange = (e) => {
+        setCondition(e.target.value)
+    };
 
-    const handleMaxPlayersChange = (e) => {
-        setMaxPlayers(e.target.value);
-    }
-
-    const handleDifficultyChange = (e) => {
-      setDifficulty(e.target.value)
-    }
-
-    const updateMinPlayers = (e) => {
-      if(parseInt(e.target.value, 10) > parseInt(maxPlayers, 10)){
-        setMaxPlayers(e.target.value)
-      } 
-      if(parseInt(e.target.value,10) <= 0) {
-        setMinPlayers(1)
-      } else {
-        setMinPlayers(e.target.value)
-      }
-    }
-
-    const updateMaxPlayers = (e) => {
-        if(parseInt(minPlayers, 10) > parseInt(e.target.value, 10)) {
-            setMaxPlayers(minPlayers)
-        }
+    const updateCondition = (e) => {
+        if(parseInt(e.target.value, 10) > 0 && parseInt(e.target.value, 10) <= 10){
+          setCondition(e.target.value)
+        } 
         else {
-          setMaxPlayers(e.target.value)
+            setCondition(5);
         }
-    }
-
-    const updateDifficulty = (e) => {
-      if (parseInt(e.target.value, 10) > 0 && parseInt(e.target.value, 10) < 6) {
-        setDifficulty(e.target.value);
-      }
-      else {
-        setDifficulty(3);
-      }
-    }
+      }  
 
     const submit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const game = {
+        const advertisement = {
           Title: data.get('title'),
           Description: data.get('description'),
-          MinPlayers: data.get('minPlayers'),
-          MaxPlayers: data.get('maxPlayers'),
+          Condition: data.get('condition'),
+          Price: data.get('price'),
           Rules: data.get('rules'),
-          Difficulty: data.get('difficulty'),
           Photos: "default.jpg"
         };
     
@@ -88,28 +60,29 @@ export function GameAdd(){
           console.log('files uploaded succesfully')
           console.log(res.data)
           if(photos !== "") {
-            game.Photos = res.data
+            advertisement.Photos = res.data
           }
-          gameService.create(game).then((res) => {
-            console.log('game created successfully')
+      
+          console.log(advertisement)
+          advertisementService.create(gameId, advertisement).then((res) => {
+            console.log('advertisement created successfully')
             console.log(res.data)
-            navigate('/games')
           }).catch((error) => {
             if(error.response.status == 401) {
-              navigate('/unauthorized')
+              //navigate('/unauthorized')
             }
           })
         }).catch((error) => {
-          if(error.response.status == 401) {
-            navigate('/unauthorized')
-          }
-        })
+            if(error.response.status == 401) {
+              //navigate('/unauthorized')
+            }
+          })
       };
 
     return (
 <Box>
       <Typography variant="h4" component="div" mb={3} align="center">
-        Add Game
+        Add Advertisement
       </Typography>
       <Box component="form" onSubmit={submit}>
         <Box display="flex" flexDirection={{ md: 'row', sm: 'column', xs: 'column' }}>
@@ -140,55 +113,25 @@ export function GameAdd(){
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  id="minPlayers"
-                  name="minPlayers"
-                  label="Minimum Players"
+                  id="condition"
+                  name="condition"
+                  label="Condition (1-10)"
                   variant="outlined"
+                  onChange={handleConditionChange}
+                  onBlur={updateCondition}
+                  value={condition}
                   fullWidth
-                  onChange={handleMinPlayersChange}
-                  onBlur={updateMinPlayers}
-                  value={minPlayers}
                   type="number"
                   required
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  id="maxPlayers"
-                  name="maxPlayers"
-                  label="Maximum Players"
+                  id="price"
+                  name="price"
+                  label="Price"
                   variant="outlined"
                   fullWidth
-                  onChange={handleMaxPlayersChange}
-                  onBlur={updateMaxPlayers}
-                  value={maxPlayers}
-                  type="number"
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="rules"
-                  name="rules"
-                  label="Rules"
-                  variant="outlined"
-                  fullWidth
-                  multiline
-                  rows={4}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="difficulty"
-                  name="difficulty"
-                  label="Difficulty (1-5)"
-                  onChange={handleDifficultyChange}
-                  onBlur={updateDifficulty}
-                  value={difficulty}
-                  variant="outlined"
-                  fullWidth
-                 
                   type="number"
                   required
                 />

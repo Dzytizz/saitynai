@@ -60,7 +60,7 @@ namespace saitynai_server.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByRoles(Roles = Roles.User)]
+        [AuthorizeByRoles(Roles.User)]
         public async Task<ActionResult<AdvertisementDto>> Create(int gameId, AdvertisementPostDto advertisementPostDto)
         {
             var game = await _gamesRepository.GetAsync(gameId);

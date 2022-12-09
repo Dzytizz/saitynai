@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import authService from "./services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom'
 
 function createUserData(access_token, roles) {
   return {access_token, roles}
@@ -10,6 +11,7 @@ export const CurrentUserContext = React.createContext();
 
 export const CurrentUserProvider = ({ children }) => {
   const navigate = useNavigate();
+
   const [currentUser, setCurrentUser] = React.useState(null);
   const [error, setError] = React.useState("");
 
@@ -49,6 +51,7 @@ export const CurrentUserProvider = ({ children }) => {
     sessionStorage.removeItem("access_token")
     sessionStorage.removeItem("roles")
     setCurrentUser(null)
+    navigate('/login')
   }
 
   return (

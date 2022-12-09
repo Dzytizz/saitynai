@@ -10,12 +10,11 @@ class GameDataService {
   }
 
   create(data) {
-    console.log(https.defaults.headers.common);
     return https.post("/games", data);
   }
 
   update(id, data) {
-    return https.update(`/games/${id}`, data);
+    return https.put(`/games/${id}`, data);
   }
 
   delete(id) {
