@@ -19,7 +19,7 @@ import './styles.css'
 
 function App() {
   return (
-    <CurrentUserProvider>
+
       <>
         <MainNavigation/>
         {/* <nav>
@@ -48,7 +48,6 @@ function App() {
         </Routes>
         <Footer/>
       </>
-    </CurrentUserProvider>
     
   );
 }

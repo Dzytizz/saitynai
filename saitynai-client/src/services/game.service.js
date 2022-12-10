@@ -10,6 +10,7 @@ class GameDataService {
   }
 
   create(data) {
+    console.log(https.defaults.headers);
     return https.post("/games", data);
   }
 

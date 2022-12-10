@@ -127,13 +127,15 @@ export function AdvertisementAdd(){
                 />
               </Grid>
               <Grid item xs={6}>
-                <TextField
+                <TextField inputProps={{min:"0", step:"0.01"}}
+                  type="number"
                   id="price"
                   name="price"
+                  step={0.01}
                   label="Price"
                   variant="outlined"
                   fullWidth
-                  type="number"
+      
                   required
                 />
               </Grid>

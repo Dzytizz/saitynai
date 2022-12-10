@@ -43,7 +43,7 @@ export const CurrentUserProvider = ({ children }) => {
     }).catch((error) => {
       setCurrentUser(null)
       setError("Wrong username or password. Try again")
-      //console.error(error);
+      console.error(error);
     });
   }
 

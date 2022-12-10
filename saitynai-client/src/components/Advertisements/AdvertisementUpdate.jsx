@@ -48,31 +48,29 @@ export function AdvertisementUpdate(){
     const submit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const advertisementData = {
+        let advertisementData = {
           Title: data.get('title'),
           Description: data.get('description'),
           Condition: data.get('condition'),
           Price: data.get('price'),
-          Rules: data.get('rules'),
           Photos: "default.jpg"
         };
     
         const formData = new FormData();
-        if(photos !== null && photos !== "") {
+        if(typeof photos !== 'string') {
           formData.append('files', photos)
         }
         fileService.uploadImages(formData).then((res) => {
           if(res.data !== "") console.log('files uploaded succesfully')
-          console.log(res.data)
-          if(photos !== "") {
+
+          if(typeof photos !== 'string') {
             advertisementData.Photos = res.data
           } else {
-            advertisementData.Photos = advertisement.Photos
+            advertisementData.Photos = advertisement.photos
           }
 
           advertisementService.update(gameId, id, advertisementData).then((res) => {
             console.log('advertisement updated successfully')
-            console.log(res.data)
             navigate(`/games/${gameId}/advertisements`)
           }).catch((error) => {
             if(error.response.status == 401  || error.response.status == 403) {
@@ -93,7 +91,6 @@ export function AdvertisementUpdate(){
         setAdvertisement(createData(advertisement.id, advertisement.title, advertisement.editDate, advertisement.description, advertisement.condition, advertisement.price, advertisement.photos));
         setPhotos(advertisement.photos.split(';')[0])
         setCondition(advertisement.condition)
-        console.log(advertisement)
       })
       
     }, [])

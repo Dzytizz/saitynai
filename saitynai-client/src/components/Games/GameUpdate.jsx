@@ -101,20 +101,19 @@ export function GameUpdate(){
         };
     
         const formData = new FormData();
-        if(photos !== null && photos !== "") {
+        if(typeof photos !== 'string') {
           formData.append('files', photos)
         }
         fileService.uploadImages(formData).then((res) => {
-          console.log('files uploaded succesfully')
-          console.log(res.data)
-          if(photos !== "") {
+          if(res.data !== '')console.log('files uploaded succesfully')
+          
+          if(typeof photos !== "string") {
             gameData.Photos = res.data
           } else {
-            gameData.Photos = game.Photos
+            gameData.Photos = game.photos
           }
           gameService.update(id, gameData).then((res) => {
             console.log('game created successfully')
-            console.log(res.data)
             navigate('/games')
           }).catch((error) => {
             if(error.response.status == 401 || error.response.status == 403) {
@@ -131,7 +130,7 @@ export function GameUpdate(){
     return ( game ?
 <Box marginLeft={"50px"} marginRight="50px">
       <Typography variant="h4" component="div" mb={3} align="center" marginTop="20px">
-        Add Game
+        Update Game
       </Typography>
       <Box component="form" onSubmit={submit}>
         <Box display="flex" flexDirection={{ md: 'row', sm: 'column', xs: 'column' }}>

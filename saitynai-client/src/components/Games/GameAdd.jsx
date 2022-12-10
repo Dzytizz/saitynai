@@ -84,22 +84,28 @@ export function GameAdd(){
         if(photos !== null && photos !== "") {
           formData.append('files', photos)
         }
+
         fileService.uploadImages(formData).then((res) => {
-          console.log('files uploaded succesfully')
-          console.log(res.data)
+          if(res.data !== '') console.log('files uploaded succesfully')
+
           if(photos !== "") {
+            console.log(photos)
             game.Photos = res.data
           }
+          console.log(game)
+
           gameService.create(game).then((res) => {
             console.log('game created successfully')
             console.log(res.data)
             navigate('/games')
           }).catch((error) => {
+            console.error(error)
             if(error.response.status == 401 || error.response.status == 403) {
               navigate('/unauthorized')
             }
         })
         }).catch((error) => {
+          console.error(error)
           if(error.response.status == 401 || error.response.status == 403) {
             navigate('/unauthorized')
           }
@@ -108,7 +114,7 @@ export function GameAdd(){
 
     return (
 <Box marginLeft={"50px"} marginRight="50px">
-      <Typography variant="h4" component="div" mb={3} align="center">
+      <Typography variant="h4" component="div" mb={3} align="center" marginTop={'20px'}>
         Add Game
       </Typography>
       <Box component="form" onSubmit={submit}>

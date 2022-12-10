@@ -27,13 +27,13 @@ export function Footer() {
           <CssBaseline />
           
           <Box
+            className="footer"
             component="footer"
             sx={{
               py: 3,
               px: 2,
               mt: 'auto',
             }}
-            className="footer"
           >
             <Container maxWidth="sm">
               <Typography variant="body1">
