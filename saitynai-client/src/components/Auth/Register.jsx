@@ -12,17 +12,28 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import authService from "../../services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const user ={
+      username: data.get("username"),
       email: data.get("email"),
       password: data.get("password"),
-    });
+    };
+    authService.register(user).then((res) => {
+      console.log("created succesfully")
+      navigate("/login")
+    }).catch((error) => {
+      console.error(error)
+    })
   };
 
   return (
@@ -50,27 +61,18 @@ export default function Register() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
+                  autoComplete="username"
+                  name="username"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="username"
+                  label="Username"
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
+              
               <Grid item xs={12}>
                 <TextField
                   type="email"

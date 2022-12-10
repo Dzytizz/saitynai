@@ -61,9 +61,9 @@ namespace saitynai_server.Controllers
             if (comment == null)
                 return NotFound($"Comment with fkAdvertisementId '{advertisementId}' and id '{commentId}' not found.");
 
-            var authorizationResult = await _authorizationService.AuthorizeAsync(User, comment, PolicyNames.ResourceOwner);
-            if (!authorizationResult.Succeeded)
-                return Forbid(); // could be 404 for security
+            //var authorizationResult = await _authorizationService.AuthorizeAsync(User, comment, PolicyNames.ResourceOwner);
+            //if (!authorizationResult.Succeeded)
+            //    return Forbid(); // could be 404 for security
 
             return Ok(_mapper.Map<CommentDto>(comment));
         }

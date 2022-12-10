@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Modal, Typography } from "@mui/material"
+import { Box, Button, Grid, Modal, TextField, Typography } from "@mui/material"
 import { useEffect } from "react"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
@@ -7,6 +7,8 @@ import {Link, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import DeleteIcon from '@mui/icons-material/Delete';
 import commentService from "../../services/comment.service"
+import { RolesProvider } from "../../RolesContext"
+import { Role } from "../roles"
 
 function createData(id, title, editDate, description, condition, price, photos) {
     return {id, title, editDate, description, condition, price, photos}
@@ -41,12 +43,57 @@ export function Advertisement(){
     const [comments, setComments] = useState([])
     const [photos, setPhotos] = useState('default.jpg')
     const {gameId, id} = useParams()
+    const [comment, setComment] = useState("");
+
+    const handleCommentChange = (event) => {
+        setComment(event.target.value)
+    }
+
+    const updateComment = (event) => {
+        setComment(event.target.value);
+    }
 
     const deleteAdvertisement = () => {
         advertisementService.delete(gameId, id).then((res) => {
             console.log('advertisement deleted')
             handleClose()
             navigate(`/games/${gameId}/advertisements`)
+        }).catch((error) => {
+            if(error.response.status == 401 || error.response.status == 403) {
+              navigate('/unauthorized')
+            }
+        })
+    }
+
+    const addComment = () => {
+        const commentObj = {
+          Description: comment,
+        };
+
+        console.log(commentObj)
+    
+        if(comment !== "") {
+            commentService.create(gameId, id, commentObj).then((res) => {
+                console.log("comment created")
+                window.location.reload();
+            }).catch((error) => {
+                if(error.response.status == 401 || error.response.status == 403) {
+                  navigate('/unauthorized')
+                }
+            })
+        }
+        
+    }
+
+    const deleteComment = (commentId) => {
+        commentService.delete(gameId, id, commentId).then((res) => {
+            console.log('comment deleted')
+            handleClose()
+            window.location.reload();
+        }).catch((error) => {
+            if(error.response.status == 401 || error.response.status == 403) {
+              navigate('/unauthorized')
+            }
         })
     }
 
@@ -124,8 +171,10 @@ export function Advertisement(){
           
         </Grid>
         <Grid container style={{ marginTop:'50px'}}>
-        <Grid item xs={12} md={6}>
-                <Button variant="outlined" component={Link} to={`/games/${id}/advertisements/new`} size="large">Update Advertisement</Button>
+            <Grid item xs={12} md={6}>
+                <RolesProvider allowedRoles={[Role.User]}>
+                    <Button variant="outlined" component={Link} to={`/games/${gameId}/advertisements/${id}/update`} size="large">Update Advertisement</Button>
+                </RolesProvider>
             </Grid>
             <Grid item xs={12} md={6}>
                 <Button onClick={handleOpen} variant="outlined" startIcon={<DeleteIcon />} size="large">Delete</Button> 
@@ -144,18 +193,45 @@ export function Advertisement(){
         </Grid>
         <Grid container spacing={{ xs: 1 }} >
             <Grid item xs={12}>
-                <Typography variant ="h5" style={{ marginTop:'50px',border: '1px solid gray'}}>Comments</Typography>
+                <Typography variant ="h5" style={{ marginTop:'50px'}}>Comments</Typography>
+            </Grid>
+            <Grid item xs={6}>
+                <TextField 
+                    id="comment"
+                    name="comment"
+                    label="Comment"
+                    variant="outlined"
+                    onChange={handleCommentChange}
+                    onBlur={updateComment}
+                    value={comment}
+                    fullWidth
+                    autoFocus
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <Button onClick={()=>{addComment()}} variant="outlined" size="small">Add Comment</Button>
             </Grid>
             {comments.map((comment, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index} height="auto" style={{ marginTop:'20px',border: '1px solid gray'}}>
+            <Grid item xs={12} sm={6} md={4} key={index} height="auto" style={{ marginTop:'20px', border: '1px solid gray'}}>
                 <Grid container>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={8}>
                         <Typography variant="h6">{comment.description}</Typography>
                         <Typography>{format(new Date(comment.editDate), "MMMM do, yyyy H:mma")}</Typography>
                     </Grid>
 
-                    <Grid item xs={6} md={3}>
-                        <Button variant="outlined" startIcon={<DeleteIcon />}>Delete</Button>
+                    <Grid item xs={12} md={4}>
+                        <Button onClick={handleOpen} variant="outlined" startIcon={<DeleteIcon />}>Delete</Button>
+                        < Modal  
+                        open={open}
+                        onClose={handleClose}>
+                        <Box sx={style}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Are you sure you want to delete this Comment?
+                        </Typography>
+                        <Button onClick={() => {deleteComment(comment.id)}} variant="outlined">Yes</Button>
+                        <Button variant="outlined" onClick={handleClose}>No</Button>
+                        </Box>
+                        </Modal>
                     </Grid>
                 </Grid>
             

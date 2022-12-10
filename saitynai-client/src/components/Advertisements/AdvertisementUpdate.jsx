@@ -48,7 +48,7 @@ export function AdvertisementUpdate(){
     const submit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const advertisement = {
+        const advertisementData = {
           Title: data.get('title'),
           Description: data.get('description'),
           Condition: data.get('condition'),
@@ -62,25 +62,28 @@ export function AdvertisementUpdate(){
           formData.append('files', photos)
         }
         fileService.uploadImages(formData).then((res) => {
-          console.log('files uploaded succesfully')
+          if(res.data !== "") console.log('files uploaded succesfully')
           console.log(res.data)
           if(photos !== "") {
-            game.Photos = res.data
+            advertisementData.Photos = res.data
+          } else {
+            advertisementData.Photos = advertisement.Photos
           }
-      
-        }).catch((error) => {
-            if(error.response.status == 401) {
-              //navigate('/unauthorized')
-            }
-        })
 
-        advertisementService.update(gameId, id, advertisement).then((res) => {
-          console.log('advertisement updated successfully')
-          console.log(res.data)
+          advertisementService.update(gameId, id, advertisementData).then((res) => {
+            console.log('advertisement updated successfully')
+            console.log(res.data)
+            navigate(`/games/${gameId}/advertisements`)
+          }).catch((error) => {
+            if(error.response.status == 401  || error.response.status == 403) {
+              navigate('/unauthorized')
+            }
+          })
+
         }).catch((error) => {
-          if(error.response.status == 401) {
-            //navigate('/unauthorized')
-          }
+            if(error.response.status == 401 || error.response.status == 403) {
+              navigate('/unauthorized')
+            }
         })
       };
 
@@ -185,7 +188,11 @@ export function AdvertisementUpdate(){
               </Grid>
               {photos ? (
                 <Grid item xs={12}>
-                  <img src={`https://saitynaistorage.blob.core.windows.net/images/${photos}`} width="100%" />
+                  {typeof photos === 'string' ?
+                  <img src={`https://saitynaistorage.blob.core.windows.net/images/${photos}`} width="100%" /> :
+                  <img src={URL.createObjectURL(photos)} width="100%" /> 
+                  }
+                  
                 </Grid>
               ) : (
                 <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>

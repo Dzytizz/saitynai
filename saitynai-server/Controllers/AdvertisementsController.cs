@@ -52,9 +52,9 @@ namespace saitynai_server.Controllers
             if (advertisement == null)
                 return NotFound($"Advertisement with fkGameId '{gameId}' and id '{advertisementId}' not found.");
 
-            var authorizationResult = await _authorizationService.AuthorizeAsync(User, advertisement, PolicyNames.ResourceOwner);
-            if (!authorizationResult.Succeeded)
-                return Forbid(); // could be 404 for security
+            //var authorizationResult = await _authorizationService.AuthorizeAsync(User, advertisement, PolicyNames.ResourceOwner);
+            //if (!authorizationResult.Succeeded)
+            //    return Forbid(); // could be 404 for security
 
             return Ok(_mapper.Map<AdvertisementDto>(advertisement));
         }

@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Role } from "../roles";
+import { useCurrentUser } from "../../CurrentUserContext";
 
 const theme = createTheme();
 
@@ -22,6 +24,24 @@ export function AdvertisemensList(){
     const navigate = useNavigate();
     const [advertisements, setAdvertisements] = useState([])
     const {gameId} = useParams()
+    const {currentUser} = useCurrentUser()
+
+    function shouldShow(allowedRoles){
+        if(allowedRoles === null) {
+            return true;
+        }
+        else if(allowedRoles !== null && currentUser === null) {
+            return false;
+        }
+
+        return allowedRoles.some(r => currentUser.roles.includes(r))
+    }
+
+    const onImageClick = (advertisement) => {
+        if(shouldShow([Role.User, Role.Admin])) {
+            navigate(`/games/${gameId}/advertisements/${advertisement.id}`)
+        }
+    }
 
     useEffect(() => {
         advertisementService.getAll(gameId).then((res) => {
@@ -39,7 +59,7 @@ export function AdvertisemensList(){
     <Box>
         <Grid container spacing={{ xs: 0, md: 1 }} >
             {advertisements.map((advertisement, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index} height="auto"  onClick = {() => navigate(`/games/${gameId}/advertisements/${advertisement.id}`)}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index} height="auto"  onClick = {() => {onImageClick(advertisement)}}>
                 <img style={imageStyle}
                     width="100%"
                     height='250px'

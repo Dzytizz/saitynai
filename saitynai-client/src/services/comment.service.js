@@ -15,7 +15,7 @@ class CommentDataService {
 
   create(gameId, advertisementId, data) {
     return https.post(
-      `/games/${gameId}/advertisements/${advertisementId}`,
+      `/games/${gameId}/advertisements/${advertisementId}/comments`,
       data
     );
   }

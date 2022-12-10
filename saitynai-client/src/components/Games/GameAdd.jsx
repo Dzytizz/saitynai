@@ -95,15 +95,15 @@ export function GameAdd(){
             console.log(res.data)
             navigate('/games')
           }).catch((error) => {
-            if(error.response.status == 401) {
+            if(error.response.status == 401 || error.response.status == 403) {
               navigate('/unauthorized')
             }
-          })
+        })
         }).catch((error) => {
-          if(error.response.status == 401) {
+          if(error.response.status == 401 || error.response.status == 403) {
             navigate('/unauthorized')
           }
-        })
+      })
       };
 
     return (

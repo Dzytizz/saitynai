@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom"
 import gameService from "../../services/game.service"
 import {Link, useNavigate } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { RolesProvider } from "../../RolesContext"
+import { Role } from "../roles"
 
 function createData(id, title, description, minPlayers, maxPlayers, rules, difficulty, photos) {
     return {id, title, description, minPlayers, maxPlayers, rules, difficulty, photos}
@@ -26,7 +28,6 @@ const style = {
     boxShadow: 24,
     p: 4,
   };
-
 
 export function Game(){
     const navigate = useNavigate()
@@ -108,25 +109,33 @@ export function Game(){
    
             </Grid>
             <Grid container>
-                <Grid item xs={12} md={6}>
-                    <Button variant="outlined" component={Link} to={`/games/${id}/advertisements/new`} size="large">Add Advertisement</Button>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Button variant="outlined" component={Link} to={`/games/${id}/advertisements`} size="large">See Game Advertisements</Button>
-                </Grid>
+                <RolesProvider allowedRoles={[Role.User]}>
+                    <Grid item xs={12} md={6}>
+                        <Button variant="outlined" component={Link} to={`/games/${id}/advertisements/new`} size="large">Add Advertisement</Button>
+                    </Grid>
+                </RolesProvider>
+                
+                    <Grid item xs={12} md={6}>
+                        <Button variant="outlined" component={Link} to={`/games/${id}/advertisements`} size="large">See Game Advertisements</Button>
+                    </Grid>
+                
+          
                 <Grid item xs={12} md={12}>
-                    <Button onClick={handleOpen} variant="outlined" startIcon={<DeleteIcon />} size="large">Delete</Button>
-                    < Modal  
-                    open={open}
-                    onClose={handleClose}>
-                    <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Are you sure you want to delete this Game?
-                    </Typography>
-                    <Button onClick={deleteGame} variant="outlined">Yes</Button>
-                    <Button variant="outlined" onClick={handleClose}>No</Button>
-                    </Box>
-                </Modal>
+                    <RolesProvider allowedRoles={[Role.Admin]}>
+                        <Button onClick={handleOpen} variant="outlined" startIcon={<DeleteIcon />} size="large">Delete</Button>
+                        < Modal  
+                        open={open}
+                        onClose={handleClose}>
+                        <Box sx={style}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Are you sure you want to delete this Game?
+                        </Typography>
+                        <Button onClick={deleteGame} variant="outlined">Yes</Button>
+                        <Button variant="outlined" onClick={handleClose}>No</Button>
+                        </Box>
+                        </Modal>
+                    </RolesProvider>
+                
                  </Grid>
             </Grid>
            

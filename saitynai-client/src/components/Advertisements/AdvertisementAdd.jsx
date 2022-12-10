@@ -67,16 +67,17 @@ export function AdvertisementAdd(){
           advertisementService.create(gameId, advertisement).then((res) => {
             console.log('advertisement created successfully')
             console.log(res.data)
+            navigate(`/games/${gameId}/advertisements`)
           }).catch((error) => {
-            if(error.response.status == 401) {
-              //navigate('/unauthorized')
+            if(error.response.status == 401 || error.response.status == 403) {
+              navigate('/unauthorized')
             }
-          })
+        })
         }).catch((error) => {
-            if(error.response.status == 401) {
-              //navigate('/unauthorized')
-            }
-          })
+          if(error.response.status == 401 || error.response.status == 403) {
+            navigate('/unauthorized')
+          }
+      })
       };
 
     return (
