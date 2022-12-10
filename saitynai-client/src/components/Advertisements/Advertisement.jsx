@@ -126,8 +126,9 @@ export function Advertisement(){
         <Typography variant="h4" component="div" mb={3} align="center"  style={{ marginTop:'10px'}}>
             {advertisement.title}
         </Typography>
+        <hr/>
         <Grid container >
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid item xs={12} sm={12} md={6} style={{border:"1px dashed #4c768d", borderRadius:"25px"}} >
                 <img style={imageStyle}
                     width="100%"
                     height="350px"
@@ -140,6 +141,7 @@ export function Advertisement(){
                     <Typography>
                         {advertisement.description}
                     </Typography>
+                    <hr/>
                 </Typography>
                 <Grid container>
                     <Grid item xs={6}>
@@ -159,18 +161,23 @@ export function Advertisement(){
                         </Typography>
                     </Grid>
                 </Grid>
+                <hr/>
                 <Typography component="h1" variant="h5"> 
                     Edit Date
                     <Typography>
                         {format(new Date(advertisement.editDate), "MMMM do, yyyy H:mma")}
                     </Typography>
                 </Typography>
+                <hr/>
 
             </Grid>
-   
+            <Grid item xs={12}>
+                <hr/>
+            </Grid>
           
         </Grid>
         <Grid container style={{ marginTop:'50px'}}>
+        
             <Grid item xs={12} md={6}>
                 <RolesProvider allowedRoles={[Role.User]}>
                     <Button variant="outlined" component={Link} to={`/games/${gameId}/advertisements/${id}/update`} size="large">Update Advertisement</Button>
@@ -191,11 +198,13 @@ export function Advertisement(){
                 </Modal>
             </Grid>
         </Grid>
-        <Grid container spacing={{ xs: 1 }} >
-            <Grid item xs={12}>
+        <Grid container spacing={{ xs: 1 }}>
+            
+            <Grid item xs={12} >
                 <Typography variant ="h5" style={{ marginTop:'50px'}}>Comments</Typography>
+                <hr/>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} >
                 <TextField 
                     id="comment"
                     name="comment"
@@ -209,10 +218,15 @@ export function Advertisement(){
                 />
             </Grid>
             <Grid item xs={6}>
-                <Button onClick={()=>{addComment()}} variant="outlined" size="small">Add Comment</Button>
+                <Button onClick={()=>{addComment()}} variant="outlined" size="large">Add Comment</Button>
             </Grid>
+            <Grid container>
+                <Grid item xs={12}>
+                    <hr/>
+                </Grid>
             {comments.map((comment, index) => (
             <Grid item xs={12} sm={6} md={4} key={index} height="auto" style={{ marginTop:'20px', border: '1px solid gray'}}>
+                
                 <Grid container>
                     <Grid item xs={12} md={8}>
                         <Typography variant="h6">{comment.description}</Typography>
@@ -237,6 +251,8 @@ export function Advertisement(){
             
             </Grid>
             ))}
+            </Grid>
+           
         </Grid>
     </Box> : (null)
 }

@@ -24,6 +24,7 @@ const MainNavigation = () => {
   const {currentUser, logout} = useCurrentUser();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [hover, setHover] = useState(false);
 
   const navigate = useNavigate();
 
@@ -41,6 +42,7 @@ const MainNavigation = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
 
   const logOut = () => {
     handleCloseUserMenu();
@@ -77,7 +79,7 @@ const MainNavigation = () => {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="false">
+      <Container maxWidth="false" className="header">
         <Toolbar disableGutters>
           <Typography
             variant="h6"
@@ -88,7 +90,7 @@ const MainNavigation = () => {
             STALIUS
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" }}}>
             <IconButton
               size="large"
               aria-label="account of current user"

@@ -100,8 +100,8 @@ export function AdvertisementUpdate(){
     
 
     return ( advertisement ? 
-<Box>
-      <Typography variant="h4" component="div" mb={3} align="center">
+<Box marginLeft={"50px"} marginRight="50px">
+      <Typography variant="h4" component="div" mb={3} align="center" marginTop="20px">
         Update Advertisement
       </Typography>
       <Box component="form" onSubmit={submit}>

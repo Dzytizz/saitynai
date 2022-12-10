@@ -80,6 +80,7 @@ export default function SignIn() {
               label="Remember me"
             /> */}
             <Button
+              className="button"
               type="submit"
               fullWidth
               variant="contained"
@@ -93,11 +94,11 @@ export default function SignIn() {
                   Forgot password?
                 </Link> */}
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Don't have an account? Register"}
                 </Link>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Box>
         </Box>

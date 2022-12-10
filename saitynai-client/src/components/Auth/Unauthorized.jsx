@@ -7,7 +7,7 @@ export function Unauthorized() {
             UNAUTHORIZED
         </Typography>
         <Typography variant="h5">
-            The resource or action you are trying to access requires higher permissions.
+            The resource or action you are trying to access requires additional permissions.
         </Typography>
     </Box>)
 

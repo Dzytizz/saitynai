@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom"
 import gameService from "../../services/game.service"
 import {Link, useNavigate } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { RolesProvider } from "../../RolesContext"
+import { RolesContext, RolesProvider } from "../../RolesContext"
 import { Role } from "../roles"
 
 function createData(id, title, description, minPlayers, maxPlayers, rules, difficulty, photos) {
@@ -64,11 +64,12 @@ export function Game(){
 
     return game !== null ? 
     <Box>
-        <Typography variant="h4" component="div" mb={3} align="center">
+        <Typography variant="h4" component="div" mb={3} align="center" marginTop = "20px">
             {game.title}
         </Typography>
+        <hr/>
         <Grid container>
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid item xs={12} sm={12} md={6} style={{border:"1px dashed #4c768d", borderRadius:"25px"}}>
                 <img style={imageStyle}
                     width="100%"
                     height="350px"
@@ -82,6 +83,7 @@ export function Game(){
                         {game.description}
                     </Typography>
                 </Typography>
+                <hr/>
                 <Grid container>
                     <Grid item xs={6}>
                         <Typography component="h1" variant="h5"> 
@@ -100,27 +102,33 @@ export function Game(){
                         </Typography>
                     </Grid>
                 </Grid>
+                <hr/>
                 <Typography component="h1" variant="h5"> 
                     Rules
                     <Typography>
                         {game.rules}
                     </Typography>
                 </Typography>
-   
+                <hr/>
+
             </Grid>
+            
             <Grid container>
+            <Grid item xs={12}>
+                <hr/>
+            </Grid>
                 <RolesProvider allowedRoles={[Role.User]}>
-                    <Grid item xs={12} md={6}>
-                        <Button variant="outlined" component={Link} to={`/games/${id}/advertisements/new`} size="large">Add Advertisement</Button>
+                    <Grid item xs={12} md={6} marginTop="20px">
+                        <Button className="button" variant="outlined" component={Link} to={`/games/${id}/advertisements/new`} size="large">Add Advertisement</Button>
                     </Grid>
                 </RolesProvider>
                 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={6} marginTop="20px">
                         <Button variant="outlined" component={Link} to={`/games/${id}/advertisements`} size="large">See Game Advertisements</Button>
                     </Grid>
                 
           
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={12} marginTop="20px">
                     <RolesProvider allowedRoles={[Role.Admin]}>
                         <Button onClick={handleOpen} variant="outlined" startIcon={<DeleteIcon />} size="large">Delete</Button>
                         < Modal  
@@ -137,6 +145,12 @@ export function Game(){
                     </RolesProvider>
                 
                  </Grid>
+                 <RolesProvider allowedRoles={[Role.Admin]}>
+                    <Grid item xs={12}>
+                        <Button variant="outlined" component={Link} to={`/games/${id}/update`} size="large">Update Game</Button>
+                    </Grid>
+                 </RolesProvider>
+               
             </Grid>
            
           

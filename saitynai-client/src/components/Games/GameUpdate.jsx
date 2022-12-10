@@ -13,14 +13,21 @@ import React, { useState } from 'react';
 import InsertPhotoRoundedIcon from '@mui/icons-material/InsertPhotoRounded';
 import gameService from "../../services/game.service";
 import fileService from '../../services/file.service';
-import {useNavigate } from "react-router-dom";
+import {useNavigate, useParams } from "react-router-dom";
+import { useEffect } from 'react';
 
-export function GameAdd(){
+export function GameUpdate(){
     const navigate = useNavigate();
+    const [game, setGame] = useState(null);
     const [photos, setPhotos] = useState('');
     const [minPlayers, setMinPlayers] = useState(1);
     const [maxPlayers, setMaxPlayers] = useState(1);
     const [difficulty, setDifficulty] = useState(3);
+    const {id} = useParams()
+
+    function createData(id, title, description, minPlayers, maxPlayers, rules, difficulty, photos) {
+        return {id, title, description, minPlayers, maxPlayers, rules, difficulty, photos}
+    }    
 
     const handlePhotoChange = (event) => {
         setPhotos(event.target.files[0]);
@@ -67,10 +74,23 @@ export function GameAdd(){
       }
     }
 
+    useEffect(() => {
+        gameService.get(id).then((res) => {
+            const game = res.data;
+            setGame(createData(game.id,game.title,game.description,game.minPlayers,game.maxPlayers,game.rules,game.difficulty,game.photos));
+            setPhotos(game.photos.split(';')[0])
+            setMinPlayers(game.minPlayers)
+            setMaxPlayers(game.maxPlayers)
+            setDifficulty(game.difficulty)
+            console.log(game)
+        })
+    }, [])
+    
+
     const submit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const game = {
+        const gameData = {
           Title: data.get('title'),
           Description: data.get('description'),
           MinPlayers: data.get('minPlayers'),
@@ -88,9 +108,11 @@ export function GameAdd(){
           console.log('files uploaded succesfully')
           console.log(res.data)
           if(photos !== "") {
-            game.Photos = res.data
+            gameData.Photos = res.data
+          } else {
+            gameData.Photos = game.Photos
           }
-          gameService.create(game).then((res) => {
+          gameService.update(id, gameData).then((res) => {
             console.log('game created successfully')
             console.log(res.data)
             navigate('/games')
@@ -106,9 +128,9 @@ export function GameAdd(){
       })
       };
 
-    return (
+    return ( game ?
 <Box marginLeft={"50px"} marginRight="50px">
-      <Typography variant="h4" component="div" mb={3} align="center">
+      <Typography variant="h4" component="div" mb={3} align="center" marginTop="20px">
         Add Game
       </Typography>
       <Box component="form" onSubmit={submit}>
@@ -121,9 +143,13 @@ export function GameAdd(){
                   name="title"
                   label="Title"
                   variant="outlined"
+                  value={game.title}
                   fullWidth
                   required
                   autoFocus
+                  onChange={(event) =>
+                    setGame({ ...game, title: event.target.value })
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -132,10 +158,14 @@ export function GameAdd(){
                   name="description"
                   label="Description"
                   variant="outlined"
+                  value={game.description}
                   fullWidth
                   multiline
                   rows={4}
                   required
+                  onChange={(event) =>
+                    setGame({ ...game, description: event.target.value })
+                  }
                 />
               </Grid>
               <Grid item xs={6}>
@@ -172,10 +202,14 @@ export function GameAdd(){
                   name="rules"
                   label="Rules"
                   variant="outlined"
+                  value={game.rules}
                   fullWidth
                   multiline
                   rows={4}
                   required
+                  onChange={(event) =>
+                    setGame({ ...game, rules: event.target.value })
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -188,7 +222,6 @@ export function GameAdd(){
                   value={difficulty}
                   variant="outlined"
                   fullWidth
-                 
                   type="number"
                   required
                 />
@@ -213,7 +246,10 @@ export function GameAdd(){
               </Grid>
               {photos ? (
                 <Grid item xs={12}>
-                  <img src={URL.createObjectURL(photos)} width="100%" />
+                  {typeof photos === 'string' ?
+                  <img src={`https://saitynaistorage.blob.core.windows.net/images/${photos}`} width="100%" /> :
+                  <img src={URL.createObjectURL(photos)} width="100%" /> 
+                  }
                 </Grid>
               ) : (
                 <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -226,10 +262,10 @@ export function GameAdd(){
         <br />
         <Box display={'flex'}>
           <Button type="submit" color="primary" variant="contained" sx={{ marginLeft: 'auto' }}>
-            Add
+            Update
           </Button>
         </Box>
       </Box>
-    </Box>
+    </Box> : null
     );
 }
