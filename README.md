@@ -85,3 +85,53 @@ Skelbimo langas su komentarais:
 ![advertsmall2](https://user-images.githubusercontent.com/60034692/206911378-86b95b48-2e61-45f4-b215-04e057552b31.JPG)
 
 Kitų langų išdėstymas yra panašus (t. y. žaidimų sąrašas pateikiamas panašiai kaip skelbimų sąrašas, pasirinkto žaidimo langas yra panašus į pasirinkto skelbimo langą, skiriasi tik įvesčių/išvesčių tipai)
+
+## API specifikacija
+
+Iš viso sukurti 19 API endpoint'ų.
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| GET | https://saitynai-server.azurewebsites.net/api/v1/games | Nėra | Nėra | 200 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games |
+
+Atsakas:  
+```yaml
+[
+    {
+        "id": 1,
+        "title": "Sagrada",
+        "description": "Šiame žaidime tapsite vitražų meistrais ir varžysitės dėl didžiausio šedevro kūrėjo titulo.",
+        "minPlayers": 2,
+        "maxPlayers": 4,
+        "rules": "Žaidimo eigoje  rinksite kauliukus ir iš jų dėliosite savo vitražą. Ne visi kauliukai dera tarpusavyje: panašių atspalvių kauliukai negali būti greta vienas kito, turimos žaidimo lentelės taip pat įveda papildomų apribojimų, kuriuos galite apeiti panaudodami specialius įrankius.",
+        "difficulty": 3,
+        "photos": "jfhua0ct.jpg;"
+    },
+    {
+        "id": 2,
+        "title": "Uno",
+        "description": "Vienas populiariausių kortų žaidimų",
+        "minPlayers": 2,
+        "maxPlayers": 10,
+        "rules": "Paeiliui, žaidėjai bando padėti kortą sutampančią pagal skaičių arba spalvą su korta ant stalo viduryje esančios kortų krūvos viršaus. Jeigu jie negali kortos dėti, jie turi traukti naują kortą, ir jeigu vis dar negali, turi praleisti ėjimą.",
+        "difficulty": 2,
+        "photos": "jhaop1yh.jpg;"
+    }
+]
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| GET | https://saitynai-server.azurewebsites.net/api/v1/games/:id | Nėra | id - žaidimo identifikatorius | 200 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1 |
+
+Atsakas:  
+```yaml
+{
+    "id": 1,
+    "title": "Sagrada",
+    "description": "Šiame žaidime tapsite vitražų meistrais ir varžysitės dėl didžiausio šedevro kūrėjo titulo.",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "rules": "Žaidimo eigoje  rinksite kauliukus ir iš jų dėliosite savo vitražą. Ne visi kauliukai dera tarpusavyje: panašių atspalvių kauliukai negali būti greta vienas kito, turimos žaidimo lentelės taip pat įveda papildomų apribojimų, kuriuos galite apeiti panaudodami specialius įrankius.",
+    "difficulty": 3,
+    "photos": "jfhua0ct.jpg;"
+}
+```
