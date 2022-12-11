@@ -77,3 +77,11 @@ Pasirinkto žaidimo langas:
 ![gameaddsmall1](https://user-images.githubusercontent.com/60034692/206910556-a09dbd6c-fc8b-40c6-a9a4-b359323ad467.JPG)
 ![gameaddsmall2](https://user-images.githubusercontent.com/60034692/206910559-cc3b262a-44bd-4655-9fc5-a30a0038acef.JPG)
 
+Skelbimo langas su komentarais:  
+![advert](https://user-images.githubusercontent.com/60034692/206911347-866f5a7b-bf13-4ead-99d1-b58458ceeeb2.png)
+![advertsmall](https://user-images.githubusercontent.com/60034692/206911364-5fda688b-4029-4602-bf2b-3858efe70825.png)
+![advertbig](https://user-images.githubusercontent.com/60034692/206911369-acec7ec2-1349-48ef-827f-a602cecd2d9e.JPG)
+![advertsmall1](https://user-images.githubusercontent.com/60034692/206911372-bc2296c4-b66a-4e1c-941f-01b9fbbf4417.JPG)
+![advertsmall2](https://user-images.githubusercontent.com/60034692/206911378-86b95b48-2e61-45f4-b215-04e057552b31.JPG)
+
+Kitų langų išdėstymas yra panašus (t. y. žaidimų sąrašas pateikiamas panašiai kaip skelbimų sąrašas, pasirinkto žaidimo langas yra panašus į pasirinkto skelbimo langą, skiriasi tik įvesčių/išvesčių tipai)
