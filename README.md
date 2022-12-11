@@ -88,7 +88,7 @@ Kitų langų išdėstymas yra panašus (t. y. žaidimų sąrašas pateikiamas pa
 
 ## API specifikacija
 
-Iš viso sukurti 19 API endpoint'ų.
+Iš viso sukurti 19 API endpoint'ų. Pagal Twitter specifikaciją aprašomi 17 iš jų (likę 2 yra pagalbiniai, failų įkėlimui ir trynimui iš serverio).
 | Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
 | --- | --- | --- | --- | --- | --- |
 | GET | https://saitynai-server.azurewebsites.net/api/v1/games | Nėra | Nėra | 200 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games |
@@ -133,5 +133,275 @@ Atsakas:
     "rules": "Žaidimo eigoje  rinksite kauliukus ir iš jų dėliosite savo vitražą. Ne visi kauliukai dera tarpusavyje: panašių atspalvių kauliukai negali būti greta vienas kito, turimos žaidimo lentelės taip pat įveda papildomų apribojimų, kuriuos galite apeiti panaudodami specialius įrankius.",
     "difficulty": 3,
     "photos": "jfhua0ct.jpg;"
+}
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| POST | https://saitynai-server.azurewebsites.net/api/v1/games | JWT Token: reikalinga Admin rolė | Žaidimo objektas | 201, 400, 401, 403, 404 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games |
+
+Atsakas:  
+```yaml
+{
+    "id": 4,
+    "title": "Naujas žaidimas",
+    "description": "Naujo žaidimo aprašymas.",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "rules": "ŽŽaidi ir laimi.",
+    "difficulty": 1,
+    "photos": "efhha0ct.jpg;"
+}
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| PUT | https://saitynai-server.azurewebsites.net/api/v1/games/:id | JWT Token: reikalinga Admin rolė | id - žaidimo identifikatorius, Žaidimo objektas | 200, 400, 401, 403, 404 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1 |
+
+Atsakas:  
+```yaml
+{
+    "id": 1,
+    "title": "Pakeistas žaidimas",
+    "description": "Pakeistas aprašymas.",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "rules": "Pakeistos taisyklės",
+    "difficulty": 1,
+    "photos": "xjkha0ci.jpg;"
+}
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| DELETE | https://saitynai-server.azurewebsites.net/api/v1/games/:id | JWT Token: reikalinga Admin rolė | id - žaidimo identifikatorius | 204, 401, 403, 400 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1 |
+Atsakas:  
+```yaml
+
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| GET | https://saitynai-server.azurewebsites.net/api/v1/games/:gameId/advertisements | Nėra | gameId - žaidimo identifikatorius | 200, 400 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1/advertisements |
+
+Atsakas:  
+```yaml
+[
+    {
+        "id": 15,
+        "title": "Parduodu Sagrada",
+        "editDate": "2022-12-10T21:24:32.3371307",
+        "description": "Parduodu labai geros būklės Sagrada žaidimą. Tel. nr: 86**********.",
+        "condition": 10,
+        "price": 25.55,
+        "photos": "vl2cvpyv.jpg;",
+        "exchangeToGame": null,
+        "fkGame": {
+            "id": 1,
+            "title": "Sagrada",
+            "description": "Šiame žaidime tapsite vitražų meistrais ir varžysitės dėl didžiausio šedevro kūrėjo titulo.",
+            "minPlayers": 2,
+            "maxPlayers": 4,
+            "rules": "Žaidimo eigoje  rinksite kauliukus ir iš jų dėliosite savo vitražą. Ne visi kauliukai dera tarpusavyje: panašių atspalvių kauliukai negali būti greta vienas kito, turimos žaidimo lentelės taip pat įveda papildomų apribojimų, kuriuos galite apeiti panaudodami specialius įrankius.",
+            "difficulty": 3,
+            "photos": "jfhua0ct.jpg;"
+        }
+    },
+    {
+        "id": 16,
+        "title": "Parduodu Sagrada žaidimą",
+        "editDate": "2022-12-10T21:26:20.3336167",
+        "description": "Parduodamas naudotas Sagrada žaidimas. Kontaktinis el. paštas: email@email.com",
+        "condition": 8,
+        "price": 20.00,
+        "photos": "d4otqbpp.jpg;",
+        "exchangeToGame": null,
+        "fkGame": {
+            "id": 1,
+            "title": "Sagrada",
+            "description": "Šiame žaidime tapsite vitražų meistrais ir varžysitės dėl didžiausio šedevro kūrėjo titulo.",
+            "minPlayers": 2,
+            "maxPlayers": 4,
+            "rules": "Žaidimo eigoje  rinksite kauliukus ir iš jų dėliosite savo vitražą. Ne visi kauliukai dera tarpusavyje: panašių atspalvių kauliukai negali būti greta vienas kito, turimos žaidimo lentelės taip pat įveda papildomų apribojimų, kuriuos galite apeiti panaudodami specialius įrankius.",
+            "difficulty": 3,
+            "photos": "jfhua0ct.jpg;"
+        }
+    }
+]
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| GET | https://saitynai-server.azurewebsites.net/api/v1/games/:gameId/advertisements/:id | Nėra | gameId - žaidimo identifikatorius, id - skelbimo identifikatorius | 200, 400 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1/advertisements/15 |
+
+Atsakas:  
+```yaml
+{
+    "id": 15,
+    "title": "Parduodu Sagrada",
+    "editDate": "2022-12-10T21:24:32.3371307",
+    "description": "Parduodu labai geros būklės Sagrada žaidimą. Tel. nr: 86**********.",
+    "condition": 10,
+    "price": 25.55,
+    "photos": "vl2cvpyv.jpg;",
+    "exchangeToGame": null,
+    "fkGame": {
+        "id": 1,
+        "title": "Sagrada",
+        "description": "Šiame žaidime tapsite vitražų meistrais ir varžysitės dėl didžiausio šedevro kūrėjo titulo.",
+        "minPlayers": 2,
+        "maxPlayers": 4,
+        "rules": "Žaidimo eigoje  rinksite kauliukus ir iš jų dėliosite savo vitražą. Ne visi kauliukai dera tarpusavyje: panašių atspalvių kauliukai negali būti greta vienas kito, turimos žaidimo lentelės taip pat įveda papildomų apribojimų, kuriuos galite apeiti panaudodami specialius įrankius.",
+        "difficulty": 3,
+        "photos": "jfhua0ct.jpg;"
+    }
+}
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| POST | https://saitynai-server.azurewebsites.net/api/v1/games/:gameId/advertisements | JWT Token: reikalinga User rolė | gameId - žaidimo identifikatorius, Skelbimo objektas | 201, 400, 401, 403, 404 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1/advertisements |
+
+Atsakas:  
+```yaml
+{
+    "id": 19,
+    "title": "Naujas skelbimas",
+    "editDate": "2022-13-10T21:24:32.3371307",
+    "description": "Parduodu labai geros būklės naują žaidimą. Tel. nr: 86**********.",
+    "condition": 10,
+    "price": 25.55,
+    "photos": "z79cvpyv.jpg;",
+    "exchangeToGame": null,
+    "fkGame": {
+        "id": 1,
+        "title": "Sagrada",
+        "description": "Šiame žaidime tapsite vitražų meistrais ir varžysitės dėl didžiausio šedevro kūrėjo titulo.",
+        "minPlayers": 2,
+        "maxPlayers": 4,
+        "rules": "Žaidimo eigoje  rinksite kauliukus ir iš jų dėliosite savo vitražą. Ne visi kauliukai dera tarpusavyje: panašių atspalvių kauliukai negali būti greta vienas kito, turimos žaidimo lentelės taip pat įveda papildomų apribojimų, kuriuos galite apeiti panaudodami specialius įrankius.",
+        "difficulty": 3,
+        "photos": "jfhua0ct.jpg;"
+    }
+}
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| PUT | https://saitynai-server.azurewebsites.net/api/v1/games/:gameId/advertisements/:id | JWT Token: reikalinga User/Admin rolė, resuras priklauso User | gameId - žaidimo identifikatorius, id - skelbimo identifikatorius, Skelbimo objektas | 200, 400, 401, 403, 404 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1/advertisements/15 |
+
+Atsakas:  
+```yaml
+{
+    "id": 15,
+    "title": "Pakeistas skelbimas",
+    "editDate": "2022-14-10T21:24:32.3371307",
+    "description": "Pakeista skelbimo informacija",
+    "condition": 10,
+    "price": 25.55,
+    "photos": "465cvpyv.jpg;",
+    "exchangeToGame": null,
+    "fkGame": {
+        "id": 1,
+        "title": "Sagrada",
+        "description": "Šiame žaidime tapsite vitražų meistrais ir varžysitės dėl didžiausio šedevro kūrėjo titulo.",
+        "minPlayers": 2,
+        "maxPlayers": 4,
+        "rules": "Žaidimo eigoje  rinksite kauliukus ir iš jų dėliosite savo vitražą. Ne visi kauliukai dera tarpusavyje: panašių atspalvių kauliukai negali būti greta vienas kito, turimos žaidimo lentelės taip pat įveda papildomų apribojimų, kuriuos galite apeiti panaudodami specialius įrankius.",
+        "difficulty": 3,
+        "photos": "jfhua0ct.jpg;"
+    }
+}
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| DELETE | https://saitynai-server.azurewebsites.net/api/v1/games/:gameId/advertisements/:id | JWT Token: reikalinga User/Admin rolė, resuras priklauso User | gameId - žaidimo identifikatorius, id - skelbimo identifikatorius | 204, 400, 401, 403 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1/advertisements/15 |
+Atsakas:  
+```yaml
+
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| GET | https://saitynai-server.azurewebsites.net/api/v1/games/:gameId/advertisemets/:addId/comments | Nėra | gameId - žaidimo identifikatorius, addId - skelbimo identifikatorius | 200, 400 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1/advertisements/15/comments |
+
+Atsakas:  
+```yaml
+[
+    {
+        "id": 13,
+        "editDate": "2022-12-10T21:26:38.2885632",
+        "description": "Labai geros būklės",
+        "fkAdvertisementId": 15
+    },
+    {
+        "id": 14,
+        "editDate": "2022-12-10T21:26:54.5863432",
+        "description": "Ar derinate kainą?",
+        "fkAdvertisementId": 15
+    }
+]
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| GET | https://saitynai-server.azurewebsites.net/api/v1/games/:gameId/advertisements/:addId/comments/:id | Nėra  | gameId - žaidimo identifikatorius, addId - skelbimo identifikatorius, id - komentaro identifikatorius | 200, 400 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1/advertisements/15/comments/13 |
+
+Atsakas:  
+```yaml
+{
+    "id": 13,
+    "editDate": "2022-12-10T21:26:38.2885632",
+    "description": "Labai geros būklės",
+    "fkAdvertisementId": 15
+}
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| POST | https://saitynai-server.azurewebsites.net/api/v1/games/:gameId/advertisements/:addId/comments | JWT Token: reikalinga User/Admin rolė | gameId - žaidimo identifikatorius, addId - skelbimo identifikatorius, Komentaro objektas | 201, 400, 401, 403, 404 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1/advertisements/15/comments |
+
+Atsakas:  
+```yaml
+{
+    "id": 15,
+    "editDate": "2022-13-10T21:26:54.5863432",
+    "description": "Naujas komentaras",
+    "fkAdvertisementId": 15
+}
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| PUT | https://saitynai-server.azurewebsites.net/api/v1/games/:gameId/advertisements/:addId/comments/:id | JWT Token: reikalinga User/Admin rolė, resuras priklauso User | gameId - žaidimo identifikatorius, addId - skelbimo identifikatorius, id - komentaro identifikatorius, Komentaro objektas | 200, 400, 401, 403, 404 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1/advertisements/15/comments/15 |
+
+Atsakas:  
+```yaml
+{
+    "id": 15,
+    "editDate": "2022-14-10T21:26:54.5863432",
+    "description": "Redaguotas komentaras",
+    "fkAdvertisementId": 15
+}
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| DELETE | https://saitynai-server.azurewebsites.net/api/v1/games/:gameId/advertisements/:addId/comments/:id | JWT Token: reikalinga User/Admin rolė, resuras priklauso User | gameId - žaidimo identifikatorius, addId - skelbimo identifikatorius, id - komentaro identifikatorius | 204, 400, 401, 403 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games/1/advertisements/15/comments/15 |
+Atsakas:  
+```yaml
+
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| POST | https://saitynai-server.azurewebsites.net/api/v1/login | Nėra | Naudotojo prisijungimo objektas | 200, 404 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/login |
+
+Atsakas:  
+```yaml
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidXNlcjEiLCJqdGkiOiI4MzBkOWQwMC05MDNkLTQyYzUtYjExNC04YzE0MDRjMWI0MWUiLCJzdWIiOiI5MmY0NDdiOC0wOWRiLTRlMjQtOGFhZi00MGRlZjhlMDNlYjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjcwNzc0NjIzLCJpc3MiOiJWYWxpZElzc3VlciIsImF1ZCI6IlRydXN0ZWRDbGllbnQifQ.0VjYdIQ8ewIJriMjj2dGhpieAi45R441p6-uEIbNgwM",
+    "roles": [
+        "User"
+    ]
+}
+```
+| Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
+| --- | --- | --- | --- | --- | --- |
+| POST | https://saitynai-server.azurewebsites.net/api/v1/register | Nėra | Naudotojo registracijos objektas | 200, 404 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/register |
+
+Atsakas:  
+```yaml
+{
+    "id": "34d01c79-eb50-4db9-a360-a0354fabf947",
+    "userName": "user4",
+    "email": "email@gmail.com"
 }
 ```
