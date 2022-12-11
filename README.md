@@ -88,7 +88,7 @@ Kitų langų išdėstymas yra panašus (t. y. žaidimų sąrašas pateikiamas pa
 
 ## API specifikacija
 
-Iš viso sukurti 19 API endpoint'ų. Pagal Twitter specifikaciją aprašomi 17 iš jų (likę 2 yra pagalbiniai, failų įkėlimui ir trynimui iš serverio).
+Iš viso sukurti 19 API endpoint'ų. Pagal Twitter specifikaciją aprašomi 17 iš jų (likę 2 yra pagalbiniai, failų įkėlimui ir šalinimui iš serverio).
 | Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
 | --- | --- | --- | --- | --- | --- |
 | GET | https://saitynai-server.azurewebsites.net/api/v1/games | Nėra | Nėra | 200 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games |
