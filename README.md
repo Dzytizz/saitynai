@@ -55,11 +55,25 @@ Sistemos architektūrai aiškinti pateikiama UML diegimo diagrama (žr. 1 pav.).
 1 pav. Sistemos diegimo diagrama
 
 ## Naudotojo sąsajos projektas 
-Pradinis (žaidimų) langas:
+Pradinis (žaidimų) langas:  
 ![main1](https://user-images.githubusercontent.com/60034692/206909390-288e3924-5267-4cc7-875d-f4ed9b2f554b.png)
 ![main2](https://user-images.githubusercontent.com/60034692/206909392-7692cdb1-5e6e-413d-afe2-fdc39df132db.png)
 ![Real1](https://user-images.githubusercontent.com/60034692/206909394-6aaca173-36c0-453d-9696-af936d392864.JPG)
 ![real2](https://user-images.githubusercontent.com/60034692/206909399-b4ead8cb-d3dc-4d64-a53c-f34908aad9ab.JPG)
 ![realbig1](https://user-images.githubusercontent.com/60034692/206909424-0c5a3ba9-fb56-4f02-87a8-479f7628add7.JPG)
 ![realbig2](https://user-images.githubusercontent.com/60034692/206909460-88ba53ed-0302-431b-9c3a-710cc4eb1916.JPG)
+
+Pasirinkto žaidimo langas:  
+![gamesmall](https://user-images.githubusercontent.com/60034692/206910041-50dded53-22c3-47c2-85f5-c2dc1b444aec.png)
+![gamebig](https://user-images.githubusercontent.com/60034692/206910043-8ec7bb14-d27a-430a-a460-53b85a51e507.png)
+![gamesingle](https://user-images.githubusercontent.com/60034692/206910112-4d43e402-50a9-4ba3-a11e-fad2eca43800.JPG)
+![gamesingle](https://user-images.githubusercontent.com/60034692/206910050-7c835c64-2b91-41ae-b4fa-e427bb9362b8.JPG)
+![gamesmall2](https://user-images.githubusercontent.com/60034692/206910055-5af3703b-a1c0-42d2-8b98-0272f8e52cc8.JPG)
+
+Žaidimo pridėjimas/atnaujinimas:  
+![gameaddsmall](https://user-images.githubusercontent.com/60034692/206910511-1db48cbe-8d39-47f2-bc65-46ca44a244c9.png)
+![addgame](https://user-images.githubusercontent.com/60034692/206910543-1ec40f6a-75e1-4127-a41b-825c828e881d.png)
+![gameaddbig](https://user-images.githubusercontent.com/60034692/206910553-d04eceff-2bd6-4eee-8672-da85427631aa.JPG)
+![gameaddsmall1](https://user-images.githubusercontent.com/60034692/206910556-a09dbd6c-fc8b-40c6-a9a4-b359323ad467.JPG)
+![gameaddsmall2](https://user-images.githubusercontent.com/60034692/206910559-cc3b262a-44bd-4655-9fc5-a30a0038acef.JPG)
 
