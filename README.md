@@ -54,3 +54,12 @@ Sistemos architektūrai aiškinti pateikiama UML diegimo diagrama (žr. 1 pav.).
 ![Paveikslėlis1](https://user-images.githubusercontent.com/60034692/194549792-5acf6e90-0a02-468f-b457-f66acb460455.jpg)  
 1 pav. Sistemos diegimo diagrama
 
+## Naudotojo sąsajos projektas 
+Pradinis (žaidimų) langas:
+![main1](https://user-images.githubusercontent.com/60034692/206909390-288e3924-5267-4cc7-875d-f4ed9b2f554b.png)
+![main2](https://user-images.githubusercontent.com/60034692/206909392-7692cdb1-5e6e-413d-afe2-fdc39df132db.png)
+![Real1](https://user-images.githubusercontent.com/60034692/206909394-6aaca173-36c0-453d-9696-af936d392864.JPG)
+![real2](https://user-images.githubusercontent.com/60034692/206909399-b4ead8cb-d3dc-4d64-a53c-f34908aad9ab.JPG)
+![realbig1](https://user-images.githubusercontent.com/60034692/206909424-0c5a3ba9-fb56-4f02-87a8-479f7628add7.JPG)
+![realbig2](https://user-images.githubusercontent.com/60034692/206909460-88ba53ed-0302-431b-9c3a-710cc4eb1916.JPG)
+
