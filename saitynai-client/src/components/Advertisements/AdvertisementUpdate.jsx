@@ -16,12 +16,15 @@ import fileService from '../../services/file.service';
 import { useParams } from "react-router-dom"
 import {useNavigate } from "react-router-dom";
 import { useEffect } from "react"
+import { useCurrentUser } from '../../CurrentUserContext';
+import { Role } from '../roles';
 
 function createData(id, title, editDate, description, condition, price, photos) {
     return {id, title, editDate, description, condition, price, photos}
 }
 
 export function AdvertisementUpdate(){
+    const {containsRoles} = useCurrentUser()
     const navigate = useNavigate();
     const [advertisement, setAdvertisement] = useState(null)
     const [photos, setPhotos] = useState('');
@@ -86,6 +89,8 @@ export function AdvertisementUpdate(){
       };
 
     useEffect(() => {
+      if(!containsRoles([Role.Admin, Role.User])) navigate('/unauthorized')
+
       advertisementService.get(gameId, id).then((res) => {
         const advertisement = res.data;
         setAdvertisement(createData(advertisement.id, advertisement.title, advertisement.editDate, advertisement.description, advertisement.condition, advertisement.price, advertisement.photos));

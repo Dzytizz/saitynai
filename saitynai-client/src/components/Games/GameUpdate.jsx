@@ -15,8 +15,11 @@ import gameService from "../../services/game.service";
 import fileService from '../../services/file.service';
 import {useNavigate, useParams } from "react-router-dom";
 import { useEffect } from 'react';
+import { useCurrentUser } from '../../CurrentUserContext';
+import { Role } from '../roles';
 
 export function GameUpdate(){
+    const {containsRoles} = useCurrentUser()
     const navigate = useNavigate();
     const [game, setGame] = useState(null);
     const [photos, setPhotos] = useState('');
@@ -75,6 +78,8 @@ export function GameUpdate(){
     }
 
     useEffect(() => {
+      if(!containsRoles([Role.Admin])) navigate('/unauthorized')
+
         gameService.get(id).then((res) => {
             const game = res.data;
             setGame(createData(game.id,game.title,game.description,game.minPlayers,game.maxPlayers,game.rules,game.difficulty,game.photos));

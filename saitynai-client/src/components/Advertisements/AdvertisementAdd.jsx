@@ -15,8 +15,12 @@ import advertisementService from '../../services/advertisement.service';
 import fileService from '../../services/file.service';
 import { useParams } from "react-router-dom"
 import {useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useCurrentUser } from '../../CurrentUserContext';
+import { Role } from '../roles';
 
 export function AdvertisementAdd(){
+    const {containsRoles} = useCurrentUser()
     const navigate = useNavigate();
     const [photos, setPhotos] = useState('');
     const [condition, setCondition] = useState(5);
@@ -79,6 +83,12 @@ export function AdvertisementAdd(){
           }
       })
       };
+
+      useEffect(() => {
+        if(!containsRoles([Role.Admin, Role.User])) navigate('/unauthorized')
+      
+      }, [])
+      
 
     return (
 <Box marginLeft={"50px"} marginRight="50px">

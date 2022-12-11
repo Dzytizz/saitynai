@@ -14,8 +14,12 @@ import InsertPhotoRoundedIcon from '@mui/icons-material/InsertPhotoRounded';
 import gameService from "../../services/game.service";
 import fileService from '../../services/file.service';
 import {useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useCurrentUser } from '../../CurrentUserContext';
+import { Role } from "../roles";
 
 export function GameAdd(){
+    const {containsRoles} = useCurrentUser();
     const navigate = useNavigate();
     const [photos, setPhotos] = useState('');
     const [minPlayers, setMinPlayers] = useState(1);
@@ -111,6 +115,11 @@ export function GameAdd(){
           }
       })
       };
+
+      useEffect(() => {
+        if(!containsRoles([Role.Admin])) navigate('/unauthorized')
+      }, [])
+      
 
     return (
 <Box marginLeft={"50px"} marginRight="50px">

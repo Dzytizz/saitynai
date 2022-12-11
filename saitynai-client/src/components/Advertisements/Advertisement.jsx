@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import commentService from "../../services/comment.service"
 import { RolesProvider } from "../../RolesContext"
 import { Role } from "../roles"
+import { useCurrentUser } from "../../CurrentUserContext"
 
 function createData(id, title, editDate, description, condition, price, photos) {
     return {id, title, editDate, description, condition, price, photos}
@@ -44,6 +45,10 @@ export function Advertisement(){
     const [photos, setPhotos] = useState('default.jpg')
     const {gameId, id} = useParams()
     const [comment, setComment] = useState("");
+
+    function shouldShow(){
+
+    }
 
     const handleCommentChange = (event) => {
         setComment(event.target.value)
@@ -82,7 +87,6 @@ export function Advertisement(){
                 }
             })
         }
-        
     }
 
     const deleteComment = (commentId) => {
@@ -104,12 +108,12 @@ export function Advertisement(){
             setPhotos(advertisement.photos.split(';')[0])
             console.log(advertisement)
             //
-        })
-        // }).catch((error) => {
-        //     if(error.response.status == 401) {
-        //         navigate('/unauthorized')
-        //     }
-        // })
+        }).catch((error) => {
+            if(error.response.status == 401 || error.response.status == 403) {
+                navigate('/unauthorized')
+              }
+        });
+
         commentService.getAll(gameId,id).then((res) => {
             const commentsList = res.data;
             setComments(
@@ -118,7 +122,11 @@ export function Advertisement(){
                 )
             );
             console.log(comments)
-        })
+        }).catch((error) => {
+            if(error.response.status == 401 || error.response.status == 403) {
+                navigate('/unauthorized')
+              }
+        });
     }, []);
 
     return advertisement !== null ? 

@@ -134,6 +134,8 @@ namespace saitynai_server.Controllers
             if (!authorizationResult.Succeeded)
                 return Forbid(); // could be 404 for security
 
+            await _fileManagementController.Delete(advertisement.Photos);
+
             await _advertisementsRepository.DeleteAsync(advertisement);
 
             return NoContent();

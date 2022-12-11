@@ -19,8 +19,14 @@ export const CurrentUserProvider = ({ children }) => {
     let token = sessionStorage.getItem("access_token");
     let roles = sessionStorage.getItem("roles");
     if(token !== null && roles !== null) {
-      setCurrentUser(createUserData(token,roles))
+      setCurrentUser(createUserData(token, roles))
     }
+  }
+
+  function containsRoles(allowedRoles) {
+    checkIfExists()
+    if(currentUser === null) return false;
+    if(allowedRoles.some(r => currentUser.roles.includes(r))) return true;
   }
 
   useEffect(() => {
@@ -55,7 +61,7 @@ export const CurrentUserProvider = ({ children }) => {
   }
 
   return (
-    <CurrentUserContext.Provider value={{currentUser, error, login, logout}}>
+    <CurrentUserContext.Provider value={{currentUser, error, login, logout, containsRoles}}>
       {children}
     </CurrentUserContext.Provider>
   );

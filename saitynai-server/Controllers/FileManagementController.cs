@@ -67,6 +67,9 @@ namespace saitynai_server.Controllers
         [AuthorizeByRoles(Roles.Admin)]
         public async Task<ActionResult> Delete(string fileName)
         {
+            if (fileName.Contains(_defaultImage))
+                return NoContent();
+
             BlobClient blobClient = new BlobClient(_configuration["AzureStorageKey"], _containerName, fileName);
             await blobClient.DeleteIfExistsAsync();
 
