@@ -405,3 +405,6 @@ Atsakas:
     "email": "email@gmail.com"
 }
 ```
+
+## Išvados
+Projekto kūrimo metu pagilintos žinios kuriant serverio pusės kodą (angl. backend) naudojant ".NET Core 6" karkasą ir kliento pusės kodą (angl. frontend) naudojant "React" su "Material UI" paketu. Sėkmingai sukurti 19 API endpoint'ų, kurie leidžia sistemai veikti. Atliktas serverio pusės diegimas debesyje naudojant "Azure" paslaugas. Įgyvendinta sistema, leidžianti naudotojams parduoti turimus stalo žaidimus.
