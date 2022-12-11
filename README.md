@@ -39,11 +39,11 @@ Administratorius gali:
 
 ## Pasirinktų technologijų aprašymas
 
-- Kliento dalies kodas (angl. front-end) kuriamas naudojantis „Svelte“
+- Kliento dalies kodas (angl. front-end) kuriamas naudojantis „React“
 - Serverio dalies kodas (angl. back-end) kuriamas naudojant „.NET Core 6.0“.
--	Duomenų bazė – „MySQL“.  
+- Duomenų bazė – „MySQL“.  
 
-„Svelte“ – atvirojo kodo priekinės dalies kompiliatorius, leidžiantis kurti sparčiai veikiančią grafinę naudotojo sąsają naudojant HTML ir JavaScript.  
+„React“ - nemokama atvirojo kodo „JavaScript“ biblioteka, skirta kurti vartotojo sąsajas, pagrįstas UI komponentais.  
 „.NET Core“ – yra nemokama ir atviro kodo valdoma kompiuterinės programinės įrangos sistema, skirta „Windows“, „Linux“ ir „macOS“ operacinėms sistemoms. Leidžia kurti serverio pusės kodą naudojant C# programavimo kalbą.  
 MySQL – viena iš reliacinių duomenų bazių valdymo sistemų, palaikanti daugelį naudotojų, dirbanti SQL kalbos pagrindu.
 
@@ -54,7 +54,7 @@ Sistemos architektūrai aiškinti pateikiama UML diegimo diagrama (žr. 1 pav.).
 ![Paveikslėlis1](https://user-images.githubusercontent.com/60034692/194549792-5acf6e90-0a02-468f-b457-f66acb460455.jpg)  
 1 pav. Sistemos diegimo diagrama
 
-## Naudotojo sąsajos projektas 
+## Naudotojo sąsajos projektas (wireframe'ai ir realizacija mažame (telefono) ir dideliame ekrane)
 Pradinis (žaidimų) langas:  
 ![main1](https://user-images.githubusercontent.com/60034692/206909390-288e3924-5267-4cc7-875d-f4ed9b2f554b.png)
 ![main2](https://user-images.githubusercontent.com/60034692/206909392-7692cdb1-5e6e-413d-afe2-fdc39df132db.png)
@@ -88,7 +88,7 @@ Kitų langų išdėstymas yra panašus (t. y. žaidimų sąrašas pateikiamas pa
 
 ## API specifikacija
 
-Iš viso sukurti 19 API endpoint'ų. Pagal Twitter specifikaciją aprašomi 17 iš jų (likę 2 yra pagalbiniai, failų įkėlimui ir trynimui iš serverio).
+Iš viso sukurti 19 API endpoint'ų. Pagal Twitter specifikaciją aprašomi 17 iš jų (likę 2 yra pagalbiniai, failų įkėlimui ir šalinimui iš serverio).
 | Metodas | Endpoint URL | Autentifikavimas | Užklausos parametrai | Atsako kodai | Pavyzdys |
 | --- | --- | --- | --- | --- | --- |
 | GET | https://saitynai-server.azurewebsites.net/api/v1/games | Nėra | Nėra | 200 | Užklausa: https://saitynai-server.azurewebsites.net/api/v1/games |
@@ -405,3 +405,6 @@ Atsakas:
     "email": "email@gmail.com"
 }
 ```
+
+## Išvados
+Projekto kūrimo metu pagilintos žinios kuriant serverio pusės kodą (angl. backend) naudojant ".NET Core 6" karkasą ir kliento pusės kodą (angl. frontend) naudojant "React" su "Material UI" paketu. Sėkmingai sukurti 19 API endpoint'ų, kurie leidžia sistemai veikti. Atliktas serverio pusės diegimas debesyje naudojant "Azure" paslaugas. Įgyvendinta sistema, leidžianti naudotojams parduoti turimus stalo žaidimus.
