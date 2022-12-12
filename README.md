@@ -2,8 +2,8 @@
 
 ### Sistemos paskirtis
 
-Kuriama sistema leis palengvinti turimų stalo žaidimų pardavimą arba keitimąsi su kitais stalo žaidimų mėgėjais. 
-Sistema leidžia administratoriui pridėti stalo žaidimus prie sistemos. Esamiems žaidimams sistemoje prisijungę naudotojai gali patalpinti skelbimus, kuriuose aprašomas parduodamas stalo žaidimas (pateikiamas turimo žaidimo būklės įvertinimas, nuotraukos). Prie skelbimo galima nurodyti, žaidimą siekiama parduoti ar išsikeisti į kitą. Jei stalo žaidimą norima iškeisti, skelbime papildomai pateikiama informacija apie norimą gauti žaidimą. Taip pat pateikiama ir pardavėjo kontaktinė informacija (telefono numeris ir/arba elektroninio pašto adresas). Kiti prisiregistravę sistemos naudotojai gali palikti komentarus apie skelbimą. Sistemos naudotojai administratoriui gali pateikti užklausas pridėti daugiau stalo žaidimų prie sistemos jei siekiama kurti skelbimą žaidimui kurio nėra sistemoje.  
+Kuriama sistema leis palengvinti turimų stalo žaidimų pardavimą su kitais stalo žaidimų mėgėjais. 
+Sistema leidžia administratoriui pridėti stalo žaidimus prie sistemos. Esamiems žaidimams sistemoje prisijungę naudotojai gali patalpinti skelbimus, kuriuose aprašomas parduodamas stalo žaidimas (pateikiamas turimo žaidimo būklės įvertinimas, nuotraukos). Kiti prisiregistravę sistemos naudotojai gali palikti komentarus apie skelbimą. Sistemos naudotojai administratoriui gali pateikti užklausas pridėti daugiau stalo žaidimų prie sistemos jei siekiama kurti skelbimą žaidimui kurio nėra sistemoje.  
 Sistemos ***naudotojas gali būti trijų tipų: svečias, prisijungęs naudotojas bei administratorius.*** Atitinkamai pagal naudotoją tipą, leidžiama atlikti skirtingas funkcijas.  
 ***Objektai: Stalo žaidimas – Skelbimas – Skelbimo komentaras.***  
 
@@ -23,8 +23,6 @@ Prisijungęs naudotojas gali:
 5. Ištrinti savo pateiktus skelbimus;  
 6. Redaguoti savo pateiktus skelbimus;  
 7. Pateikti atsiliepimą apie kito naudotojo skelbimą;  
-8. Pateikti informaciją apie žaidimą, į kurį norima iškeisti turimą žaidimą;  
-9. Pateikti užklausą administratoriui, kad būtų pridėtas naujas žaidimas sistemoje.  
 
 Administratorius gali:  
 1. Peržiūrėti žaidimus;  
@@ -32,10 +30,9 @@ Administratorius gali:
 3. Šalinti paskyras iš sistemos;  
 4. Šalinti skelbimus iš sistemos;  
 5. Redaguoti skelbimus;  
-6. Peržiūrėti žaidimo pridėjimo užklausas;  
-7. Pridėti žaidimus prie sistemos;  
-8. Šalinti žaidimus iš sistemos;  
-9. Redaguoti žaidimų informaciją.  
+6. Pridėti žaidimus prie sistemos;  
+7. Šalinti žaidimus iš sistemos;  
+8. Redaguoti žaidimų informaciją.  
 
 ## Pasirinktų technologijų aprašymas
 
